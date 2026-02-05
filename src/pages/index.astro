@@ -1,0 +1,50 @@
+---
+// Main Index Page
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import SkillsSection from "../components/SkillsSection.astro";
+import ExperienceTimeline from "../components/ExperienceTimeline.astro";
+import Education from "../components/Education.astro";
+import Contact from "../components/Contact.astro";
+---
+
+<Layout>
+	<Navigation />
+	<Hero />
+	<SkillsSection />
+	<ExperienceTimeline />
+	<Education />
+	<Contact />
+</Layout>
+
+<style is:global>
+	/* Smooth scroll for anchor links */
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-top: 80px;
+	}
+
+	/* Add spacing for fixed navbar */
+	main {
+		position: relative;
+	}
+
+	/* Section dividers */
+	section:not(:first-child)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100px;
+		height: 1px;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			var(--color-primary),
+			transparent
+		);
+		opacity: 0.3;
+	}
+</style>

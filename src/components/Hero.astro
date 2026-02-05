@@ -1,0 +1,553 @@
+---
+// Hero Section Component
+---
+
+<section class="hero" id="hero">
+    <div class="container">
+        <div class="hero-content">
+            <!-- Badge -->
+            <div class="hero-badge animate-item">
+                <span class="badge-icon">📱</span>
+                <span>Desarrollador Mobile Senior</span>
+            </div>
+
+            <!-- Name -->
+            <h1 class="hero-title animate-item">
+                <span class="hero-greeting">Hola, soy</span>
+                <span class="hero-name gradient-text">Reales Myles</span>
+                <span class="hero-name">Clarence</span>
+            </h1>
+
+            <!-- Tagline -->
+            <p class="hero-tagline animate-item">
+                <span class="typewriter" id="typewriter"></span>
+                <span class="typewriter-cursor">|</span>
+            </p>
+
+            <!-- Description -->
+            <p class="hero-description animate-item">
+                +8 años construyendo aplicaciones móviles de <strong
+                    >alto impacto</strong
+                >. Especializado en <span class="highlight flutter"
+                    >Flutter</span
+                >,
+                <span class="highlight android">Android</span> e
+                <span class="highlight ios">iOS</span>. Liderazgo técnico y
+                mentoría de equipos.
+            </p>
+
+            <!-- Tech Stack Pills -->
+            <div class="tech-stack animate-item">
+                <div class="tech-pill flutter">
+                    <svg
+                        class="tech-icon"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357L14.314 0zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.386z"
+                        ></path>
+                    </svg>
+                    <span>Flutter</span>
+                </div>
+                <div class="tech-pill android">
+                    <svg
+                        class="tech-icon"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M17.523 15.341a.858.858 0 1 0 0 1.717.858.858 0 0 0 0-1.717m-11.046 0a.858.858 0 1 0 0 1.717.858.858 0 0 0 0-1.717M18.175 8.26l1.727-2.992a.358.358 0 0 0-.13-.49.358.358 0 0 0-.49.13l-1.75 3.03a10.912 10.912 0 0 0-4.531-.965 10.911 10.911 0 0 0-4.532.965l-1.75-3.03a.358.358 0 0 0-.49-.13.358.358 0 0 0-.13.49l1.727 2.992A10.165 10.165 0 0 0 2.01 16.59h19.98a10.165 10.165 0 0 0-3.815-8.33"
+                        ></path>
+                    </svg>
+                    <span>Android</span>
+                </div>
+                <div class="tech-pill ios">
+                    <svg
+                        class="tech-icon"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
+                        ></path>
+                    </svg>
+                    <span>iOS</span>
+                </div>
+                <div class="tech-pill react">
+                    <svg
+                        class="tech-icon"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38a2.167 2.167 0 0 0-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44a23.476 23.476 0 0 0-3.107-.534A23.892 23.892 0 0 0 12.769 4.7c1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442a22.73 22.73 0 0 0-3.113.538 15.02 15.02 0 0 1-.254-1.42c-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.127zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87a25.64 25.64 0 0 1-4.412.005 26.64 26.64 0 0 1-1.183-1.86c-.372-.64-.71-1.29-1.018-1.946a25.17 25.17 0 0 1 1.013-1.954c.38-.66.773-1.286 1.18-1.868A25.245 25.245 0 0 1 12 8.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933a25.952 25.952 0 0 0-1.345-2.32zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493a23.966 23.966 0 0 0-1.1-2.98c.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98a23.142 23.142 0 0 0-1.086 2.964c-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39a25.819 25.819 0 0 0 1.341-2.338zm-9.945.02c.22.38.448.76.69 1.15.235.39.48.77.74 1.14-.7-.1-1.37-.23-2.01-.38.18-.63.4-1.28.66-1.93v.02zm4.88 4.05c-.285.3-.57.58-.87.85a24.71 24.71 0 0 1-.858-.83c.29 0 .57.01.86.01s.57.01.86 0z"
+                        ></path>
+                    </svg>
+                    <span>React Native</span>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="hero-cta animate-item">
+                <a href="#experience" class="btn btn-primary">
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    Ver Experiencia
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                        ></path>
+                    </svg>
+                    Contacto
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="hero-floating">
+            <div class="floating-card card-1">
+                <span class="floating-icon">⚡</span>
+                <span>Performance</span>
+            </div>
+            <div class="floating-card card-2">
+                <span class="floating-icon">🎨</span>
+                <span>UI/UX</span>
+            </div>
+            <div class="floating-card card-3">
+                <span class="floating-icon">🚀</span>
+                <span>Escalable</span>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator animate-item">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll</span>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: var(--space-20) 0;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Badge */
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-primary-light);
+        margin-bottom: var(--space-6);
+    }
+
+    .badge-icon {
+        font-size: var(--text-lg);
+    }
+
+    /* Title */
+    .hero-title {
+        font-size: var(--text-6xl);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: var(--space-6);
+    }
+
+    .hero-greeting {
+        display: block;
+        font-size: var(--text-xl);
+        font-weight: 400;
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-2);
+    }
+
+    .hero-name {
+        display: block;
+    }
+
+    /* Tagline */
+    .hero-tagline {
+        font-size: var(--text-xl);
+        color: var(--color-secondary);
+        font-family: var(--font-mono);
+        margin-bottom: var(--space-6);
+        min-height: 1.5em;
+    }
+
+    .typewriter-cursor {
+        display: inline-block;
+        animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    /* Description */
+    .hero-description {
+        font-size: var(--text-lg);
+        color: var(--color-text-muted);
+        max-width: 700px;
+        margin: 0 auto var(--space-8);
+        line-height: 1.8;
+    }
+
+    .hero-description strong {
+        color: var(--color-text);
+    }
+
+    .highlight {
+        font-weight: 600;
+        padding: 0 var(--space-1);
+        border-radius: var(--radius-sm);
+    }
+
+    .highlight.flutter {
+        color: #42a5f5;
+        background: rgba(66, 165, 245, 0.1);
+    }
+
+    .highlight.android {
+        color: #3ddc84;
+        background: rgba(61, 220, 132, 0.1);
+    }
+
+    .highlight.ios {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Tech Stack */
+    .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-10);
+    }
+
+    .tech-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        transition: all var(--transition-base);
+        cursor: default;
+    }
+
+    .tech-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .tech-pill.flutter {
+        background: rgba(66, 165, 245, 0.15);
+        color: #42a5f5;
+        border: 1px solid rgba(66, 165, 245, 0.3);
+    }
+
+    .tech-pill.android {
+        background: rgba(61, 220, 132, 0.15);
+        color: #3ddc84;
+        border: 1px solid rgba(61, 220, 132, 0.3);
+    }
+
+    .tech-pill.ios {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tech-pill.react {
+        background: rgba(97, 218, 251, 0.15);
+        color: #61dafb;
+        border: 1px solid rgba(97, 218, 251, 0.3);
+    }
+
+    .tech-pill:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px -5px currentColor;
+    }
+
+    /* CTA */
+    .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-4);
+    }
+
+    /* Floating Cards */
+    .hero-floating {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .floating-card {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-lg);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .floating-icon {
+        font-size: var(--text-lg);
+    }
+
+    .floating-card.card-1 {
+        top: 20%;
+        left: 5%;
+        animation: float 8s ease-in-out infinite;
+    }
+
+    .floating-card.card-2 {
+        top: 40%;
+        right: 5%;
+        animation: float 10s ease-in-out infinite 1s;
+    }
+
+    .floating-card.card-3 {
+        bottom: 25%;
+        left: 10%;
+        animation: float 9s ease-in-out infinite 2s;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: var(--space-8);
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-2);
+        color: var(--color-text-subtle);
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .scroll-mouse {
+        width: 24px;
+        height: 40px;
+        border: 2px solid var(--color-text-subtle);
+        border-radius: var(--radius-full);
+        display: flex;
+        justify-content: center;
+        padding-top: 8px;
+    }
+
+    .scroll-wheel {
+        width: 4px;
+        height: 8px;
+        background: var(--color-primary);
+        border-radius: var(--radius-full);
+        animation: scrollDown 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDown {
+        0%,
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: translateY(10px);
+            opacity: 0.3;
+        }
+    }
+
+    /* Animation for items */
+    .animate-item {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .animate-item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    .animate-item:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .animate-item:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    .animate-item:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    .animate-item:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+    .animate-item:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+    .animate-item:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .floating-card {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            padding: var(--space-16) 0;
+        }
+
+        .hero-title {
+            font-size: var(--text-4xl);
+        }
+
+        .hero-greeting {
+            font-size: var(--text-base);
+        }
+
+        .hero-tagline {
+            font-size: var(--text-base);
+        }
+
+        .hero-description {
+            font-size: var(--text-base);
+        }
+
+        .tech-stack {
+            gap: var(--space-2);
+        }
+
+        .tech-pill {
+            font-size: var(--text-xs);
+            padding: var(--space-1) var(--space-3);
+        }
+
+        .hero-cta {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        .scroll-indicator {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    // Typewriter effect
+    const typewriterElement = document.getElementById("typewriter");
+    const phrases = [
+        "Flutter & Dart Expert",
+        "Android Nativo (Kotlin/Java)",
+        "iOS Development (Swift)",
+        "React Native Developer",
+        "Liderazgo Técnico de Equipos",
+        "Clean Architecture Advocate",
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function typewrite() {
+        if (!typewriterElement) return;
+
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+            typewriterElement.textContent = currentPhrase.substring(
+                0,
+                charIndex - 1,
+            );
+            charIndex--;
+            typeSpeed = 50;
+        } else {
+            typewriterElement.textContent = currentPhrase.substring(
+                0,
+                charIndex + 1,
+            );
+            charIndex++;
+            typeSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(typewrite, typeSpeed);
+    }
+
+    typewrite();
+</script>

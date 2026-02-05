@@ -1,0 +1,456 @@
+---
+// Education & Certifications Component
+const education = [
+    {
+        degree: "Ingeniería de Sistemas",
+        institution: "Universidad de Colombia",
+        period: "2014 – 2019",
+        icon: "🎓",
+    },
+    {
+        degree: "Diplomado en Innovación",
+        institution: "Universidad de Colombia",
+        period: "Sep 2016 – Sep 2017",
+        icon: "📜",
+    },
+];
+
+const certifications = [
+    {
+        name: "Flutter: Tu guía completa para iOS y Android",
+        provider: "Udemy",
+        icon: "📱",
+    },
+    {
+        name: "Firebase para Android con Kotlin de la A a la Z",
+        provider: "Udemy",
+        icon: "🔥",
+    },
+    {
+        name: "Kotlin Multiplatform: Curso intensivo para Android y iOS",
+        provider: "Udemy",
+        icon: "🔄",
+    },
+    {
+        name: "JavaScript avanzado: Buenas prácticas",
+        provider: "LinkedIn Learning",
+        icon: "⚡",
+    },
+    {
+        name: "Fundamentos del desarrollo web: Full Stack o Front-end",
+        provider: "LinkedIn Learning",
+        icon: "🌐",
+    },
+    {
+        name: "JavaScript esencial",
+        provider: "LinkedIn Learning",
+        icon: "💛",
+    },
+    {
+        name: "Inglés B2",
+        provider: "Certificación Internacional",
+        icon: "🌍",
+    },
+];
+
+const languages = [
+    { name: "Español", level: "Nativo", flag: "🇨🇴" },
+    { name: "Criollo", level: "Nativo/Bilingüe", flag: "🏝️" },
+    { name: "Inglés", level: "B2 (Intermedio Alto)", flag: "🇺🇸" },
+];
+---
+
+<section class="education section" id="education">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <span class="section-badge">
+                <span>🎓</span>
+                <span>Formación</span>
+            </span>
+            <h2 class="section-title">
+                Educación & <span class="gradient-text">Certificaciones</span>
+            </h2>
+            <p class="section-subtitle">
+                Aprendizaje continuo para mantenerse a la vanguardia
+            </p>
+        </div>
+
+        <div class="education-grid">
+            <!-- Left Column: Education & Languages -->
+            <div class="education-column">
+                <!-- Education Cards -->
+                <div class="edu-section">
+                    <h3 class="subsection-title">
+                        <span class="subsection-icon">🏛️</span>
+                        Educación Formal
+                    </h3>
+                    <div class="edu-cards">
+                        {
+                            education.map((edu, index) => (
+                                <div class="edu-card glass" data-index={index}>
+                                    <div class="edu-icon">{edu.icon}</div>
+                                    <div class="edu-content">
+                                        <h4 class="edu-degree">{edu.degree}</h4>
+                                        <p class="edu-institution">
+                                            {edu.institution}
+                                        </p>
+                                        <span class="edu-period">
+                                            {edu.period}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="edu-section">
+                    <h3 class="subsection-title">
+                        <span class="subsection-icon">🗣️</span>
+                        Idiomas
+                    </h3>
+                    <div class="languages-grid">
+                        {
+                            languages.map((lang, index) => (
+                                <div
+                                    class="language-card glass"
+                                    data-index={index}
+                                >
+                                    <span class="language-flag">
+                                        {lang.flag}
+                                    </span>
+                                    <div class="language-info">
+                                        <span class="language-name">
+                                            {lang.name}
+                                        </span>
+                                        <span class="language-level">
+                                            {lang.level}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Certifications -->
+            <div class="certifications-column">
+                <h3 class="subsection-title">
+                    <span class="subsection-icon">🏆</span>
+                    Certificaciones & Cursos
+                </h3>
+                <div class="cert-list">
+                    {
+                        certifications.map((cert, index) => (
+                            <div class="cert-item glass" data-index={index}>
+                                <span class="cert-icon">{cert.icon}</span>
+                                <div class="cert-content">
+                                    <h4 class="cert-name">{cert.name}</h4>
+                                    <span class="cert-provider">
+                                        {cert.provider}
+                                    </span>
+                                </div>
+                                <div class="cert-check">
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    >
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                        <polyline points="22 4 12 14.01 9 11.01" />
+                                    </svg>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .education {
+        position: relative;
+    }
+
+    /* Section Header */
+    .section-header {
+        text-align: center;
+        margin-bottom: var(--space-16);
+    }
+
+    .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        color: var(--color-primary-light);
+        margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+        font-size: var(--text-4xl);
+        font-weight: 800;
+        margin-bottom: var(--space-4);
+    }
+
+    .section-subtitle {
+        font-size: var(--text-lg);
+        color: var(--color-text-muted);
+    }
+
+    /* Grid Layout */
+    .education-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-10);
+        align-items: start;
+    }
+
+    @media (max-width: 968px) {
+        .education-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Subsection */
+    .edu-section {
+        margin-bottom: var(--space-10);
+    }
+
+    .subsection-title {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        margin-bottom: var(--space-6);
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .subsection-icon {
+        font-size: var(--text-2xl);
+    }
+
+    /* Education Cards */
+    .edu-cards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .edu-card {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-4);
+        padding: var(--space-5);
+        border-radius: var(--radius-xl);
+        transition: all var(--transition-base);
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .edu-card.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .edu-card:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .edu-icon {
+        font-size: var(--text-3xl);
+        flex-shrink: 0;
+    }
+
+    .edu-content {
+        flex: 1;
+    }
+
+    .edu-degree {
+        font-size: var(--text-lg);
+        font-weight: 700;
+        margin-bottom: var(--space-1);
+    }
+
+    .edu-institution {
+        font-size: var(--text-sm);
+        color: var(--color-primary-light);
+        margin-bottom: var(--space-2);
+    }
+
+    .edu-period {
+        display: inline-block;
+        padding: var(--space-1) var(--space-3);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+    }
+
+    /* Languages */
+    .languages-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .language-card {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        transition: all var(--transition-base);
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .language-card.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .language-card:hover {
+        transform: translateX(10px);
+        background: rgba(99, 102, 241, 0.1);
+    }
+
+    .language-flag {
+        font-size: var(--text-2xl);
+    }
+
+    .language-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .language-name {
+        font-weight: 600;
+        font-size: var(--text-base);
+    }
+
+    .language-level {
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
+    }
+
+    /* Certifications */
+    .certifications-column {
+        position: relative;
+    }
+
+    .cert-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .cert-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        transition: all var(--transition-base);
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .cert-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .cert-item:hover {
+        transform: translateX(10px);
+        background: rgba(34, 211, 238, 0.05);
+        border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    .cert-icon {
+        font-size: var(--text-xl);
+        flex-shrink: 0;
+    }
+
+    .cert-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .cert-name {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        margin-bottom: var(--space-1);
+        line-height: 1.4;
+    }
+
+    .cert-provider {
+        font-size: var(--text-xs);
+        color: var(--color-text-subtle);
+    }
+
+    .cert-check {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(34, 211, 238, 0.1);
+        border-radius: 50%;
+        color: var(--color-secondary);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: var(--text-3xl);
+        }
+
+        .edu-card {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    // Intersection Observer for animations
+    const eduObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const delay =
+                        Number((entry.target as HTMLElement).dataset.index) *
+                        100;
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+                    }, delay);
+                    eduObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 },
+    );
+
+    document
+        .querySelectorAll(".edu-card, .language-card, .cert-item")
+        .forEach((item) => {
+            eduObserver.observe(item);
+        });
+</script>

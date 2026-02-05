@@ -1,0 +1,516 @@
+---
+// Skills Section Component
+const skillCategories = [
+    {
+        title: "Desarrollo Mobile",
+        icon: "📱",
+        color: "primary",
+        skills: [
+            { name: "Flutter", level: 95, icon: "flutter" },
+            { name: "Android (Kotlin)", level: 90, icon: "android" },
+            { name: "Android (Java)", level: 85, icon: "android" },
+            { name: "iOS (Swift)", level: 80, icon: "ios" },
+            { name: "React Native", level: 75, icon: "react" },
+        ],
+    },
+    {
+        title: "Lenguajes",
+        icon: "💻",
+        color: "secondary",
+        skills: [
+            { name: "Dart", level: 95 },
+            { name: "Kotlin", level: 90 },
+            { name: "Java", level: 85 },
+            { name: "Swift", level: 80 },
+            { name: "JavaScript", level: 85 },
+            { name: "Go / Golang", level: 70 },
+        ],
+    },
+    {
+        title: "Frontend & Backend",
+        icon: "🌐",
+        color: "accent",
+        skills: [
+            { name: "Angular", level: 75 },
+            { name: "React", level: 80 },
+            { name: "REST APIs", level: 90 },
+            { name: "Firebase", level: 90 },
+        ],
+    },
+    {
+        title: "Bases de Datos",
+        icon: "🗄️",
+        color: "primary",
+        skills: [
+            { name: "PostgreSQL", level: 80 },
+            { name: "MySQL", level: 85 },
+            { name: "MariaDB", level: 75 },
+            { name: "Firebase DB", level: 90 },
+        ],
+    },
+    {
+        title: "DevOps & Tools",
+        icon: "⚙️",
+        color: "secondary",
+        skills: [
+            { name: "Docker", level: 75 },
+            { name: "Kubernetes", level: 65 },
+            { name: "GitHub", level: 95 },
+            { name: "GitLab", level: 85 },
+            { name: "Jira", level: 90 },
+        ],
+    },
+    {
+        title: "Habilidades Blandas",
+        icon: "🤝",
+        color: "accent",
+        skills: [
+            { name: "Liderazgo de Equipos", level: 95 },
+            { name: "Mentoría", level: 90 },
+            { name: "Comunicación", level: 90 },
+            { name: "Work in Team", level: 95 },
+            { name: "Inteligencia Emocional", level: 85 },
+        ],
+    },
+];
+---
+
+<section class="skills section" id="skills">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <span class="section-badge">
+                <span>🛠️</span>
+                <span>Stack Tecnológico</span>
+            </span>
+            <h2 class="section-title">
+                Habilidades <span class="gradient-text">Técnicas</span>
+            </h2>
+            <p class="section-subtitle">
+                +8 años perfeccionando el arte del desarrollo mobile
+            </p>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="skills-grid">
+            {
+                skillCategories.map((category, catIndex) => (
+                    <div class="skill-category glass" data-category={catIndex}>
+                        <div class="category-header">
+                            <span class="category-icon">{category.icon}</span>
+                            <h3 class="category-title">{category.title}</h3>
+                        </div>
+                        <div class="category-skills skills-tags">
+                            {category.skills.map((skill, skillIndex) => (
+                                <span
+                                    class={`skill-tag ${category.color}`}
+                                    data-skill={skillIndex}
+                                >
+                                    {skill.name}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-item glass">
+                <span class="stat-number" data-count="8">0</span>
+                <span class="stat-label">Años de Experiencia</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" data-count="20">0</span>
+                <span class="stat-label">Proyectos Entregados</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" data-count="5">0</span>
+                <span class="stat-label">Empresas</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" data-count="10">0</span>
+                <span class="stat-label">Apps en Tiendas</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .skills {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Section Header */
+    .section-header {
+        text-align: center;
+        margin-bottom: var(--space-16);
+    }
+
+    .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        color: var(--color-primary-light);
+        margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+        font-size: var(--text-4xl);
+        font-weight: 800;
+        margin-bottom: var(--space-4);
+    }
+
+    .section-subtitle {
+        font-size: var(--text-lg);
+        color: var(--color-text-muted);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+        margin-bottom: var(--space-16);
+    }
+
+    @media (max-width: 1024px) {
+        .skills-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 640px) {
+        .skills-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Category Card */
+    .skill-category {
+        padding: var(--space-6);
+        border-radius: var(--radius-xl);
+        transition: all var(--transition-base);
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .skill-category.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .skill-category:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .category-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-5);
+        padding-bottom: var(--space-4);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .category-icon {
+        font-size: var(--text-2xl);
+    }
+
+    .category-title {
+        font-size: var(--text-lg);
+        font-weight: 700;
+    }
+
+    /* Skill Items */
+    .category-skills {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .skill-item {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all var(--transition-base);
+    }
+
+    .skill-item.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .skill-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-2);
+    }
+
+    .skill-name {
+        font-size: var(--text-sm);
+        font-weight: 500;
+    }
+
+    .skill-level {
+        font-size: var(--text-xs);
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+    }
+
+    /* Skills as Tags (for Lenguajes category) */
+    .skills-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .skill-tag {
+        display: inline-flex;
+        padding: var(--space-2) var(--space-4);
+        background: rgba(139, 92, 246, 0.15);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-secondary-light);
+        transition: all var(--transition-fast);
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    .skill-tag.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .skill-tag:hover {
+        transform: scale(1.05);
+    }
+
+    /* Tag Color Variants */
+    .skill-tag.primary {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.3);
+        color: var(--color-primary-light);
+    }
+
+    .skill-tag.primary:hover {
+        background: rgba(99, 102, 241, 0.25);
+    }
+
+    .skill-tag.secondary {
+        background: rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.3);
+        color: var(--color-secondary-light);
+    }
+
+    .skill-tag.secondary:hover {
+        background: rgba(139, 92, 246, 0.25);
+    }
+
+    .skill-tag.accent {
+        background: rgba(236, 72, 153, 0.15);
+        border-color: rgba(236, 72, 153, 0.3);
+        color: var(--color-accent);
+    }
+
+    .skill-tag.accent:hover {
+        background: rgba(236, 72, 153, 0.25);
+    }
+
+    /* Progress Bar */
+    .skill-bar {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-full);
+        overflow: hidden;
+    }
+
+    .skill-progress {
+        height: 100%;
+        width: 0;
+        border-radius: var(--radius-full);
+        transition: width 1s ease-out;
+        position: relative;
+    }
+
+    .skill-progress.animate {
+        width: var(--progress);
+    }
+
+    .skill-progress.primary {
+        background: var(--gradient-primary);
+    }
+
+    .skill-progress.secondary {
+        background: linear-gradient(
+            90deg,
+            var(--color-secondary) 0%,
+            var(--color-secondary-light) 100%
+        );
+    }
+
+    .skill-progress.accent {
+        background: var(--gradient-accent);
+    }
+
+    .skill-progress::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        animation: shimmer 2s infinite;
+        background-size: 200% 100%;
+    }
+
+    /* Stats Row */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-6);
+    }
+
+    @media (max-width: 768px) {
+        .stats-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: var(--space-6);
+        border-radius: var(--radius-xl);
+        transition: all var(--transition-base);
+    }
+
+    .stat-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: var(--text-4xl);
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: var(--space-2);
+    }
+
+    .stat-number::after {
+        content: "+";
+        -webkit-text-fill-color: var(--color-secondary);
+    }
+
+    .stat-label {
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
+    }
+</style>
+
+<script>
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                // Animate category cards
+                if (entry.target.classList.contains("skill-category")) {
+                    const delay =
+                        Number((entry.target as HTMLElement).dataset.category) *
+                        100;
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+
+                        // Animate skill items inside
+                        const skillItems =
+                            entry.target.querySelectorAll(".skill-item");
+                        skillItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add("visible");
+                                const progress =
+                                    item.querySelector(".skill-progress");
+                                if (progress) {
+                                    progress.classList.add("animate");
+                                }
+                            }, index * 100);
+                        });
+
+                        // Animate skill tags inside (for Lenguajes category)
+                        const skillTags =
+                            entry.target.querySelectorAll(".skill-tag");
+                        skillTags.forEach((tag, index) => {
+                            setTimeout(() => {
+                                tag.classList.add("visible");
+                            }, index * 80);
+                        });
+                    }, delay);
+                }
+
+                // Animate stat numbers
+                if (entry.target.classList.contains("stat-item")) {
+                    const numberEl = entry.target.querySelector(".stat-number");
+                    if (numberEl) {
+                        const target = parseInt(
+                            (numberEl as HTMLElement).dataset.count || "0",
+                        );
+                        animateNumber(numberEl, target);
+                    }
+                }
+
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements
+    document
+        .querySelectorAll(".skill-category")
+        .forEach((el) => observer.observe(el));
+    document
+        .querySelectorAll(".stat-item")
+        .forEach((el) => observer.observe(el));
+
+    // Number animation
+    function animateNumber(element: Element, target: number) {
+        let current = 0;
+        const increment = target / 30;
+        const duration = 1500;
+        const stepTime = duration / 30;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            (element as HTMLElement).textContent =
+                Math.floor(current).toString();
+        }, stepTime);
+    }
+</script>
