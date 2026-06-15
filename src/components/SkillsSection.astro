@@ -1,81 +1,138 @@
 ---
 // Skills Section Component
-const skillCategories = [
+import * as si from "simple-icons";
+
+// Logos de marca (simple-icons)
+const iconMap: Record<string, any> = {
+    flutter: si.siFlutter,
+    android: si.siAndroid,
+    swift: si.siSwift,
+    react: si.siReact,
+    dart: si.siDart,
+    kotlin: si.siKotlin,
+    java: si.siOpenjdk, // Java no tiene icono propio (marca Oracle) → OpenJDK
+    javascript: si.siJavascript,
+    go: si.siGo,
+    angular: si.siAngular,
+    firebase: si.siFirebase,
+    postgresql: si.siPostgresql,
+    mysql: si.siMysql,
+    mariadb: si.siMariadb,
+    docker: si.siDocker,
+    kubernetes: si.siKubernetes,
+    github: si.siGithub,
+    gitlab: si.siGitlab,
+    jira: si.siJira,
+};
+
+// Iconos propios (estilo Material) para skills sin logo de marca
+const customIcons: Record<string, string> = {
+    code: '<path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>',
+    star: '<path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>',
+    school: '<path d="M12 3 1 9l11 6 9-4.91V17h2V9zM5 13.18v4L12 21l7-3.82v-4L12 17z"/>',
+    chat: '<path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>',
+    people: '<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>',
+    heart: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>',
+};
+
+type Skill = { name: string; brand?: string; custom?: string };
+type Category = { title: string; skills: Skill[] };
+
+const skillCategories: Category[] = [
     {
         title: "Desarrollo Mobile",
-        icon: "📱",
-        color: "primary",
         skills: [
-            { name: "Flutter", level: 95, icon: "flutter" },
-            { name: "Android (Kotlin)", level: 90, icon: "android" },
-            { name: "Android (Java)", level: 85, icon: "android" },
-            { name: "iOS (Swift)", level: 80, icon: "ios" },
-            { name: "React Native", level: 75, icon: "react" },
+            { name: "Flutter", brand: "flutter" },
+            { name: "Android · Kotlin", brand: "android" },
+            { name: "Android · Java", brand: "android" },
+            { name: "iOS · Swift", brand: "swift" },
+            { name: "React Native", brand: "react" },
         ],
     },
     {
         title: "Lenguajes",
-        icon: "💻",
-        color: "secondary",
         skills: [
-            { name: "Dart", level: 95 },
-            { name: "Kotlin", level: 90 },
-            { name: "Java", level: 85 },
-            { name: "Swift", level: 80 },
-            { name: "JavaScript", level: 85 },
-            { name: "Go / Golang", level: 70 },
+            { name: "Dart", brand: "dart" },
+            { name: "Kotlin", brand: "kotlin" },
+            { name: "Java", brand: "java" },
+            { name: "Swift", brand: "swift" },
+            { name: "JavaScript", brand: "javascript" },
+            { name: "Go", brand: "go" },
         ],
     },
     {
         title: "Frontend & Backend",
-        icon: "🌐",
-        color: "accent",
         skills: [
-            { name: "Angular", level: 75 },
-            { name: "React", level: 80 },
-            { name: "REST APIs", level: 90 },
-            { name: "Firebase", level: 90 },
+            { name: "Angular", brand: "angular" },
+            { name: "React", brand: "react" },
+            { name: "REST APIs", custom: "code" },
+            { name: "Firebase", brand: "firebase" },
         ],
     },
     {
         title: "Bases de Datos",
-        icon: "🗄️",
-        color: "primary",
         skills: [
-            { name: "PostgreSQL", level: 80 },
-            { name: "MySQL", level: 85 },
-            { name: "MariaDB", level: 75 },
-            { name: "Firebase DB", level: 90 },
+            { name: "PostgreSQL", brand: "postgresql" },
+            { name: "MySQL", brand: "mysql" },
+            { name: "MariaDB", brand: "mariadb" },
+            { name: "Firebase", brand: "firebase" },
         ],
     },
     {
         title: "DevOps & Tools",
-        icon: "⚙️",
-        color: "secondary",
         skills: [
-            { name: "Docker", level: 75 },
-            { name: "Kubernetes", level: 65 },
-            { name: "GitHub", level: 95 },
-            { name: "GitLab", level: 85 },
-            { name: "Jira", level: 90 },
+            { name: "Docker", brand: "docker" },
+            { name: "Kubernetes", brand: "kubernetes" },
+            { name: "GitHub", brand: "github" },
+            { name: "GitLab", brand: "gitlab" },
+            { name: "Jira", brand: "jira" },
         ],
     },
     {
         title: "Habilidades Blandas",
-        icon: "🤝",
-        color: "accent",
         skills: [
-            { name: "Liderazgo de Equipos", level: 95 },
-            { name: "Mentoría", level: 90 },
-            { name: "Comunicación", level: 90 },
-            { name: "Work in Team", level: 95 },
-            { name: "Inteligencia Emocional", level: 85 },
+            { name: "Liderazgo", custom: "star" },
+            { name: "Mentoría", custom: "school" },
+            { name: "Comunicación", custom: "chat" },
+            { name: "Trabajo en Equipo", custom: "people" },
+            { name: "Inteligencia Emocional", custom: "heart" },
         ],
     },
 ];
+
+// Luminancia relativa para decidir color del logo (legible sobre fondo negro)
+function lum(hex: string) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+}
+function rgba(hex: string, a: number) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+function resolve(skill: Skill) {
+    if (skill.brand && iconMap[skill.brand]) {
+        const ic = iconMap[skill.brand];
+        const hex = "#" + ic.hex;
+        const dark = lum(hex) < 0.25;
+        return {
+            inner: `<path d="${ic.path}"></path>`,
+            fill: dark ? "#f5f5f7" : hex,
+            glow: dark ? "rgba(255, 255, 255, 0.4)" : rgba(hex, 0.55),
+        };
+    }
+    const c = customIcons[skill.custom ?? "code"] ?? customIcons.code;
+    return { inner: c, fill: "#f5f5f7", glow: "rgba(255, 255, 255, 0.4)" };
+}
 ---
 
 <section class="skills section" id="skills">
+    <div class="skills-glow" aria-hidden="true"></div>
     <div class="container">
         <!-- Section Header -->
         <div class="section-header">
@@ -91,24 +148,42 @@ const skillCategories = [
             </p>
         </div>
 
-        <!-- Skills Grid -->
-        <div class="skills-grid">
+        <!-- Skill Groups -->
+        <div class="skills-groups">
             {
                 skillCategories.map((category, catIndex) => (
-                    <div class="skill-category glass" data-category={catIndex}>
-                        <div class="category-header">
-                            <span class="category-icon">{category.icon}</span>
-                            <h3 class="category-title">{category.title}</h3>
+                    <div
+                        class="skill-group"
+                        data-group
+                        style={`--gi:${catIndex}`}
+                    >
+                        <div class="group-head">
+                            <h3 class="group-title">{category.title}</h3>
                         </div>
-                        <div class="category-skills skills-tags">
-                            {category.skills.map((skill, skillIndex) => (
-                                <span
-                                    class={`skill-tag ${category.color}`}
-                                    data-skill={skillIndex}
-                                >
-                                    {skill.name}
-                                </span>
-                            ))}
+                        <div class="app-grid">
+                            {category.skills.map((skill, sIdx) => {
+                                const r = resolve(skill);
+                                return (
+                                    <div
+                                        class="app-tile"
+                                        style={`--i:${sIdx}; --brand:${r.glow}`}
+                                    >
+                                        <div class="app-icon">
+                                            <svg
+                                                class="app-logo"
+                                                viewBox="0 0 24 24"
+                                                fill={r.fill}
+                                                role="img"
+                                                aria-label={skill.name}
+                                                set:html={r.inner}
+                                            />
+                                        </div>
+                                        <span class="app-label">
+                                            {skill.name}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 ))
@@ -143,6 +218,30 @@ const skillCategories = [
         overflow: hidden;
     }
 
+    /* Luz ambiental que sigue el cursor */
+    .skills-glow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(
+            440px circle at var(--mx, 50%) var(--my, 30%),
+            rgba(255, 255, 255, 0.07),
+            transparent 72%
+        );
+        transition: opacity 450ms var(--ease-ios);
+    }
+
+    .skills.glow-active .skills-glow {
+        opacity: 1;
+    }
+
+    .skills .container {
+        position: relative;
+        z-index: 1;
+    }
+
     /* Section Header */
     .section-header {
         text-align: center;
@@ -154,11 +253,13 @@ const skillCategories = [
         align-items: center;
         gap: var(--space-2);
         padding: var(--space-2) var(--space-4);
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: var(--glass-bg-strong);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border-strong);
         border-radius: var(--radius-full);
         font-size: var(--text-sm);
-        color: var(--color-primary-light);
+        color: var(--color-text-muted);
         margin-bottom: var(--space-4);
     }
 
@@ -175,211 +276,185 @@ const skillCategories = [
         margin: 0 auto;
     }
 
-    /* Skills Grid */
-    .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-6);
+    /* === Grupos de skills === */
+    .skills-groups {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-12);
         margin-bottom: var(--space-16);
     }
 
-    @media (max-width: 1024px) {
-        .skills-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 640px) {
-        .skills-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    /* Category Card */
-    .skill-category {
-        padding: var(--space-6);
-        border-radius: var(--radius-xl);
-        transition: all var(--transition-base);
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    .skill-category.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .skill-category:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: var(--shadow-xl);
-    }
-
-    .category-header {
+    .group-head {
         display: flex;
-        align-items: center;
+        align-items: baseline;
+        justify-content: center;
         gap: var(--space-3);
-        margin-bottom: var(--space-5);
-        padding-bottom: var(--space-4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .category-icon {
+    .group-title {
         font-size: var(--text-2xl);
+        font-weight: 600;
+        letter-spacing: -0.02em;
     }
 
-    .category-title {
-        font-size: var(--text-lg);
-        font-weight: 700;
-    }
-
-    /* Skill Items */
-    .category-skills {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-4);
-    }
-
-    .skill-item {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all var(--transition-base);
-    }
-
-    .skill-item.visible {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    .skill-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--space-2);
-    }
-
-    .skill-name {
-        font-size: var(--text-sm);
-        font-weight: 500;
-    }
-
-    .skill-level {
-        font-size: var(--text-xs);
-        font-family: var(--font-mono);
-        color: var(--color-text-muted);
-    }
-
-    /* Skills as Tags (for Lenguajes category) */
-    .skills-tags {
+    /* === Cuadrícula de iconos tipo home screen de iOS === */
+    .app-grid {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--space-2);
+        justify-content: center;
+        gap: var(--space-8) var(--space-6);
     }
 
-    .skill-tag {
-        display: inline-flex;
-        padding: var(--space-2) var(--space-4);
-        background: rgba(139, 92, 246, 0.15);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: var(--radius-full);
-        font-size: var(--text-sm);
-        font-weight: 500;
-        color: var(--color-secondary-light);
-        transition: all var(--transition-fast);
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    .skill-tag.visible {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    .skill-tag:hover {
-        transform: scale(1.05);
-    }
-
-    /* Tag Color Variants */
-    .skill-tag.primary {
-        background: rgba(99, 102, 241, 0.15);
-        border-color: rgba(99, 102, 241, 0.3);
-        color: var(--color-primary-light);
-    }
-
-    .skill-tag.primary:hover {
-        background: rgba(99, 102, 241, 0.25);
-    }
-
-    .skill-tag.secondary {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.3);
-        color: var(--color-secondary-light);
-    }
-
-    .skill-tag.secondary:hover {
-        background: rgba(139, 92, 246, 0.25);
-    }
-
-    .skill-tag.accent {
-        background: rgba(236, 72, 153, 0.15);
-        border-color: rgba(236, 72, 153, 0.3);
-        color: var(--color-accent);
-    }
-
-    .skill-tag.accent:hover {
-        background: rgba(236, 72, 153, 0.25);
-    }
-
-    /* Progress Bar */
-    .skill-bar {
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-full);
-        overflow: hidden;
-    }
-
-    .skill-progress {
-        height: 100%;
-        width: 0;
-        border-radius: var(--radius-full);
-        transition: width 1s ease-out;
+    .app-tile {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+        width: 100px;
+        opacity: 0;
+        transform: translateY(16px) scale(0.94);
+        transition:
+            opacity var(--transition-base),
+            transform var(--transition-base);
+        transition-delay: calc(var(--i, 0) * 45ms);
     }
 
-    .skill-progress.animate {
-        width: var(--progress);
+    .skill-group.visible .app-tile {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 
-    .skill-progress.primary {
-        background: var(--gradient-primary);
-    }
-
-    .skill-progress.secondary {
-        background: linear-gradient(
-            90deg,
-            var(--color-secondary) 0%,
-            var(--color-secondary-light) 100%
-        );
-    }
-
-    .skill-progress.accent {
-        background: var(--gradient-accent);
-    }
-
-    .skill-progress::after {
+    /* Halo de color de marca detrás del icono */
+    .app-tile::before {
         content: "";
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
+        left: 50%;
+        width: 84px;
+        height: 84px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            var(--brand, rgba(255, 255, 255, 0.3)) 0%,
+            transparent 68%
         );
-        animation: shimmer 2s infinite;
-        background-size: 200% 100%;
+        filter: blur(22px);
+        opacity: 0;
+        z-index: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-base);
+    }
+
+    .app-tile:hover::before {
+        opacity: 0.9;
+    }
+
+    /* Squircle de cristal líquido */
+    .app-icon {
+        position: relative;
+        z-index: 1;
+        width: 84px;
+        height: 84px;
+        display: grid;
+        place-items: center;
+        border-radius: 21px;
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.16) 0%,
+            rgba(255, 255, 255, 0.05) 55%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(20px) saturate(160%);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        box-shadow:
+            inset 0 1.5px 1px rgba(255, 255, 255, 0.42),
+            inset 0 -10px 22px -8px rgba(0, 0, 0, 0.35),
+            0 18px 32px -14px rgba(0, 0, 0, 0.7);
+        transform-style: preserve-3d;
+        transition:
+            transform 160ms ease,
+            box-shadow var(--transition-base);
+        will-change: transform;
+        cursor: pointer;
+        -webkit-box-reflect: below 6px
+            linear-gradient(transparent 58%, rgba(0, 0, 0, 0.32));
+    }
+
+    /* Reflejo superior tipo cristal */
+    .app-icon::before {
+        content: "";
+        position: absolute;
+        inset: 1px 1px auto 1px;
+        height: 46%;
+        border-radius: 20px 20px 50% 50%;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.32) 0%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        pointer-events: none;
+    }
+
+    .app-icon:hover {
+        box-shadow:
+            inset 0 1.5px 1px rgba(255, 255, 255, 0.5),
+            inset 0 -10px 22px -8px rgba(0, 0, 0, 0.35),
+            0 26px 44px -14px rgba(0, 0, 0, 0.85);
+    }
+
+    .app-logo {
+        width: 42px;
+        height: 42px;
+        transform: translateZ(24px);
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+    }
+
+    .app-label {
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        text-align: center;
+        letter-spacing: -0.01em;
+        transition: color var(--transition-fast);
+    }
+
+    .app-tile:hover .app-label {
+        color: var(--color-text);
+    }
+
+    @media (max-width: 480px) {
+        .app-grid {
+            gap: var(--space-6) var(--space-4);
+        }
+
+        .app-tile {
+            width: 84px;
+        }
+
+        .app-icon,
+        .app-tile::before {
+            width: 72px;
+            height: 72px;
+        }
+
+        .app-icon {
+            border-radius: 18px;
+        }
+
+        .app-logo {
+            width: 36px;
+            height: 36px;
+        }
+
+        .group-title {
+            font-size: var(--text-xl);
+        }
     }
 
     /* Stats Row */
@@ -398,13 +473,17 @@ const skillCategories = [
     .stat-item {
         text-align: center;
         padding: var(--space-6);
-        border-radius: var(--radius-xl);
-        transition: all var(--transition-base);
+        border-radius: 24px;
+        transition:
+            transform var(--transition-base),
+            box-shadow var(--transition-base),
+            border-color var(--transition-base);
     }
 
     .stat-item:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-glow);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--glass-border-strong);
     }
 
     .stat-number {
@@ -430,50 +509,27 @@ const skillCategories = [
 </style>
 
 <script>
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                // Animate category cards
-                if (entry.target.classList.contains("skill-category")) {
-                    const delay =
-                        Number((entry.target as HTMLElement).dataset.category) *
-                        100;
-                    setTimeout(() => {
-                        entry.target.classList.add("visible");
-
-                        // Animate skill items inside
-                        const skillItems =
-                            entry.target.querySelectorAll(".skill-item");
-                        skillItems.forEach((item, index) => {
-                            setTimeout(() => {
-                                item.classList.add("visible");
-                                const progress =
-                                    item.querySelector(".skill-progress");
-                                if (progress) {
-                                    progress.classList.add("animate");
-                                }
-                            }, index * 100);
-                        });
-
-                        // Animate skill tags inside (for Lenguajes category)
-                        const skillTags =
-                            entry.target.querySelectorAll(".skill-tag");
-                        skillTags.forEach((tag, index) => {
-                            setTimeout(() => {
-                                tag.classList.add("visible");
-                            }, index * 80);
-                        });
-                    }, delay);
+    // Revelar grupos al entrar en viewport
+    const groupObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    groupObserver.unobserve(entry.target);
                 }
+            });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+    document
+        .querySelectorAll(".skill-group")
+        .forEach((el) => groupObserver.observe(el));
 
-                // Animate stat numbers
-                if (entry.target.classList.contains("stat-item")) {
+    // Contadores de estadísticas
+    const statObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
                     const numberEl = entry.target.querySelector(".stat-number");
                     if (numberEl) {
                         const target = parseInt(
@@ -481,28 +537,20 @@ const skillCategories = [
                         );
                         animateNumber(numberEl, target);
                     }
+                    statObserver.unobserve(entry.target);
                 }
-
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements
-    document
-        .querySelectorAll(".skill-category")
-        .forEach((el) => observer.observe(el));
+            });
+        },
+        { threshold: 0.4 },
+    );
     document
         .querySelectorAll(".stat-item")
-        .forEach((el) => observer.observe(el));
+        .forEach((el) => statObserver.observe(el));
 
-    // Number animation
     function animateNumber(element: Element, target: number) {
         let current = 0;
         const increment = target / 30;
-        const duration = 1500;
-        const stepTime = duration / 30;
-
+        const stepTime = 1500 / 30;
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
@@ -512,5 +560,49 @@ const skillCategories = [
             (element as HTMLElement).textContent =
                 Math.floor(current).toString();
         }, stepTime);
+    }
+
+    // Tilt 3D interactivo siguiendo el cursor
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!reduceMotion) {
+        document.querySelectorAll<HTMLElement>(".app-icon").forEach((icon) => {
+            icon.addEventListener("pointermove", (e) => {
+                const r = icon.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width - 0.5;
+                const py = (e.clientY - r.top) / r.height - 0.5;
+                icon.style.transform = `perspective(520px) rotateX(${(-py * 16).toFixed(2)}deg) rotateY(${(px * 16).toFixed(2)}deg) translateY(-6px) scale(1.06)`;
+            });
+            icon.addEventListener("pointerleave", () => {
+                icon.style.transition = "transform 320ms cubic-bezier(0.34,1.56,0.64,1)";
+                icon.style.transform = "";
+                window.setTimeout(() => {
+                    icon.style.transition = "";
+                }, 320);
+            });
+            icon.addEventListener("pointerdown", () => {
+                icon.style.transition = "transform 90ms ease";
+                icon.style.transform += " scale(0.92)";
+            });
+            icon.addEventListener("pointerup", () => {
+                icon.style.transition = "transform 160ms ease";
+            });
+        });
+
+        // Luz ambiental que sigue el cursor sobre la sección
+        const skillsSection = document.querySelector<HTMLElement>(".skills");
+        if (skillsSection) {
+            skillsSection.addEventListener("pointermove", (e) => {
+                const r = skillsSection.getBoundingClientRect();
+                skillsSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                skillsSection.style.setProperty("--my", `${e.clientY - r.top}px`);
+                skillsSection.classList.add("glow-active");
+            });
+            skillsSection.addEventListener("pointerleave", () => {
+                skillsSection.classList.remove("glow-active");
+            });
+        }
     }
 </script>

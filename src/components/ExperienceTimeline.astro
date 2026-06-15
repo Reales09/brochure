@@ -186,11 +186,13 @@ const experiences = [
         align-items: center;
         gap: var(--space-2);
         padding: var(--space-2) var(--space-4);
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: var(--glass-bg-strong);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border-strong);
         border-radius: var(--radius-full);
         font-size: var(--text-sm);
-        color: var(--color-primary-light);
+        color: var(--color-text-muted);
         margin-bottom: var(--space-4);
     }
 
@@ -217,15 +219,15 @@ const experiences = [
         left: 50%;
         top: 0;
         bottom: 0;
-        width: 2px;
+        width: 1px;
         background: linear-gradient(
             180deg,
-            var(--color-primary) 0%,
-            var(--color-secondary) 50%,
-            var(--color-accent) 100%
+            transparent 0%,
+            rgba(255, 255, 255, 0.35) 12%,
+            rgba(255, 255, 255, 0.35) 88%,
+            transparent 100%
         );
         transform: translateX(-50%);
-        opacity: 0.3;
     }
 
     /* Timeline Item */
@@ -269,8 +271,8 @@ const experiences = [
     }
 
     .timeline-item.current .timeline-dot {
-        border-color: var(--color-secondary);
-        box-shadow: 0 0 20px var(--color-secondary);
+        border-color: #ffffff;
+        box-shadow: 0 0 22px rgba(255, 255, 255, 0.6);
         animation: pulse 2s infinite;
     }
 
@@ -286,7 +288,7 @@ const experiences = [
     }
 
     .timeline-item.current .dot-inner {
-        background: var(--color-secondary);
+        background: #ffffff;
     }
 
     /* Timeline Card */
@@ -303,8 +305,8 @@ const experiences = [
     }
 
     .timeline-item.current .timeline-card {
-        border-color: rgba(34, 211, 238, 0.3);
-        background: rgba(34, 211, 238, 0.05);
+        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.06);
     }
 
     .card-header {
@@ -334,7 +336,8 @@ const experiences = [
         align-items: center;
         gap: var(--space-2);
         padding: var(--space-1) var(--space-3);
-        background: rgba(99, 102, 241, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
         color: var(--color-text-muted);
@@ -376,7 +379,7 @@ const experiences = [
     .highlight-item svg {
         flex-shrink: 0;
         margin-top: 2px;
-        color: var(--color-secondary);
+        color: var(--color-secondary-light);
     }
 
     /* Technologies */
@@ -388,11 +391,11 @@ const experiences = [
 
     .tech-tag {
         padding: var(--space-1) var(--space-3);
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
-        color: var(--color-primary-light);
+        color: var(--color-text-muted);
         font-weight: 500;
     }
 

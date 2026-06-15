@@ -1,17 +1,64 @@
 ---
 // Education & Certifications Component
+import * as si from "simple-icons";
+
+const iconMap: Record<string, any> = {
+    flutter: si.siFlutter,
+    firebase: si.siFirebase,
+    kotlin: si.siKotlin,
+    javascript: si.siJavascript,
+    html5: si.siHtml5,
+};
+
+// Iconos propios (estilo Material) para lo que no tiene logo de marca
+const customIcons: Record<string, string> = {
+    school: '<path d="M12 3 1 9l11 6 9-4.91V17h2V9zM5 13.18v4L12 21l7-3.82v-4L12 17z"/>',
+    bulb: '<path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>',
+    language: '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>',
+};
+
+function lum(hex: string) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+}
+function rgba(hex: string, a: number) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+type Icn = { svg: string; fill: string; glow: string };
+function resolve(brand?: string, custom?: string): Icn {
+    if (brand && iconMap[brand]) {
+        const ic = iconMap[brand];
+        const hex = "#" + ic.hex;
+        const dark = lum(hex) < 0.25;
+        return {
+            svg: `<path d="${ic.path}"></path>`,
+            fill: dark ? "#f5f5f7" : hex,
+            glow: dark ? "rgba(255, 255, 255, 0.4)" : rgba(hex, 0.6),
+        };
+    }
+    const cu = customIcons[custom ?? "language"] ?? customIcons.language;
+    return { svg: cu, fill: "#f5f5f7", glow: "rgba(255, 255, 255, 0.4)" };
+}
+
 const education = [
     {
         degree: "Ingeniería de Sistemas",
         institution: "Universidad de Colombia",
         period: "2014 – 2019",
-        icon: "🎓",
+        custom: "school",
     },
     {
         degree: "Diplomado en Innovación",
         institution: "Universidad de Colombia",
         period: "Sep 2016 – Sep 2017",
-        icon: "📜",
+        custom: "bulb",
     },
 ];
 
@@ -19,37 +66,37 @@ const certifications = [
     {
         name: "Flutter: Tu guía completa para iOS y Android",
         provider: "Udemy",
-        icon: "📱",
+        brand: "flutter",
     },
     {
         name: "Firebase para Android con Kotlin de la A a la Z",
         provider: "Udemy",
-        icon: "🔥",
+        brand: "firebase",
     },
     {
         name: "Kotlin Multiplatform: Curso intensivo para Android y iOS",
         provider: "Udemy",
-        icon: "🔄",
+        brand: "kotlin",
     },
     {
         name: "JavaScript avanzado: Buenas prácticas",
         provider: "LinkedIn Learning",
-        icon: "⚡",
+        brand: "javascript",
     },
     {
         name: "Fundamentos del desarrollo web: Full Stack o Front-end",
         provider: "LinkedIn Learning",
-        icon: "🌐",
+        brand: "html5",
     },
     {
         name: "JavaScript esencial",
         provider: "LinkedIn Learning",
-        icon: "💛",
+        brand: "javascript",
     },
     {
         name: "Inglés B2",
         provider: "Certificación Internacional",
-        icon: "🌍",
+        custom: "language",
     },
 ];
 
@@ -61,6 +108,7 @@ const languages = [
 ---
 
 <section class="education section" id="education">
+    <div class="education-glow" aria-hidden="true"></div>
     <div class="container">
         <!-- Section Header -->
         <div class="section-header">
@@ -82,25 +130,43 @@ const languages = [
                 <!-- Education Cards -->
                 <div class="edu-section">
                     <h3 class="subsection-title">
-                        <span class="subsection-icon">🏛️</span>
+                        <span class="sq-icon sq-xs">
+                            <span class="sq-glyph">🏛️</span>
+                        </span>
                         Educación Formal
                     </h3>
                     <div class="edu-cards">
                         {
-                            education.map((edu, index) => (
-                                <div class="edu-card glass" data-index={index}>
-                                    <div class="edu-icon">{edu.icon}</div>
-                                    <div class="edu-content">
-                                        <h4 class="edu-degree">{edu.degree}</h4>
-                                        <p class="edu-institution">
-                                            {edu.institution}
-                                        </p>
-                                        <span class="edu-period">
-                                            {edu.period}
-                                        </span>
+                            education.map((edu, index) => {
+                                const ic = resolve(undefined, edu.custom);
+                                return (
+                                    <div class="edu-card glass" data-index={index}>
+                                        <div
+                                            class="sq-icon"
+                                            style={`--brand:${ic.glow}`}
+                                        >
+                                            <svg
+                                                class="sq-logo"
+                                                viewBox="0 0 24 24"
+                                                fill={ic.fill}
+                                                aria-hidden="true"
+                                                set:html={ic.svg}
+                                            />
+                                        </div>
+                                        <div class="edu-content">
+                                            <h4 class="edu-degree">
+                                                {edu.degree}
+                                            </h4>
+                                            <p class="edu-institution">
+                                                {edu.institution}
+                                            </p>
+                                            <span class="edu-period">
+                                                {edu.period}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            ))
+                                );
+                            })
                         }
                     </div>
                 </div>
@@ -108,7 +174,9 @@ const languages = [
                 <!-- Languages -->
                 <div class="edu-section">
                     <h3 class="subsection-title">
-                        <span class="subsection-icon">🗣️</span>
+                        <span class="sq-icon sq-xs">
+                            <span class="sq-glyph">🗣️</span>
+                        </span>
                         Idiomas
                     </h3>
                     <div class="languages-grid">
@@ -117,9 +185,10 @@ const languages = [
                                 <div
                                     class="language-card glass"
                                     data-index={index}
+                                    style="--brand: rgba(255, 255, 255, 0.35)"
                                 >
-                                    <span class="language-flag">
-                                        {lang.flag}
+                                    <span class="sq-icon sq-sm">
+                                        <span class="sq-glyph">{lang.flag}</span>
                                     </span>
                                     <div class="language-info">
                                         <span class="language-name">
@@ -139,35 +208,52 @@ const languages = [
             <!-- Right Column: Certifications -->
             <div class="certifications-column">
                 <h3 class="subsection-title">
-                    <span class="subsection-icon">🏆</span>
+                    <span class="sq-icon sq-xs">
+                        <span class="sq-glyph">🏆</span>
+                    </span>
                     Certificaciones & Cursos
                 </h3>
                 <div class="cert-list">
                     {
-                        certifications.map((cert, index) => (
-                            <div class="cert-item glass" data-index={index}>
-                                <span class="cert-icon">{cert.icon}</span>
-                                <div class="cert-content">
-                                    <h4 class="cert-name">{cert.name}</h4>
-                                    <span class="cert-provider">
-                                        {cert.provider}
+                        certifications.map((cert, index) => {
+                            const ic = resolve(cert.brand, cert.custom);
+                            return (
+                                <div
+                                    class="cert-item glass"
+                                    data-index={index}
+                                    style={`--brand:${ic.glow}`}
+                                >
+                                    <span class="sq-icon sq-sm">
+                                        <svg
+                                            class="sq-logo"
+                                            viewBox="0 0 24 24"
+                                            fill={ic.fill}
+                                            aria-hidden="true"
+                                            set:html={ic.svg}
+                                        />
                                     </span>
+                                    <div class="cert-content">
+                                        <h4 class="cert-name">{cert.name}</h4>
+                                        <span class="cert-provider">
+                                            {cert.provider}
+                                        </span>
+                                    </div>
+                                    <div class="cert-check">
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                            <polyline points="22 4 12 14.01 9 11.01" />
+                                        </svg>
+                                    </div>
                                 </div>
-                                <div class="cert-check">
-                                    <svg
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                        <polyline points="22 4 12 14.01 9 11.01" />
-                                    </svg>
-                                </div>
-                            </div>
-                        ))
+                            );
+                        })
                     }
                 </div>
             </div>
@@ -178,6 +264,31 @@ const languages = [
 <style>
     .education {
         position: relative;
+        overflow: hidden;
+    }
+
+    /* Luz ambiental que sigue el cursor */
+    .education-glow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(
+            460px circle at var(--mx, 50%) var(--my, 30%),
+            rgba(255, 255, 255, 0.06),
+            transparent 72%
+        );
+        transition: opacity 450ms var(--ease-ios);
+    }
+
+    .education.glow-active .education-glow {
+        opacity: 1;
+    }
+
+    .education .container {
+        position: relative;
+        z-index: 1;
     }
 
     /* Section Header */
@@ -191,11 +302,13 @@ const languages = [
         align-items: center;
         gap: var(--space-2);
         padding: var(--space-2) var(--space-4);
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: var(--glass-bg-strong);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border-strong);
         border-radius: var(--radius-full);
         font-size: var(--text-sm);
-        color: var(--color-primary-light);
+        color: var(--color-text-muted);
         margin-bottom: var(--space-4);
     }
 
@@ -208,6 +321,88 @@ const languages = [
     .section-subtitle {
         font-size: var(--text-lg);
         color: var(--color-text-muted);
+    }
+
+    /* === Squircle de iconos (mismo concepto que Skills) === */
+    .sq-icon {
+        position: relative;
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px;
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.16) 0%,
+            rgba(255, 255, 255, 0.05) 55%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.4),
+            inset 0 -6px 14px -6px rgba(0, 0, 0, 0.35),
+            0 10px 20px -10px rgba(0, 0, 0, 0.6);
+        transition:
+            box-shadow var(--transition-base),
+            transform var(--transition-base);
+    }
+
+    .sq-icon::before {
+        content: "";
+        position: absolute;
+        inset: 1px 1px auto 1px;
+        height: 46%;
+        border-radius: 12px 12px 50% 50%;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%
+        );
+        pointer-events: none;
+    }
+
+    .sq-sm {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+    }
+
+    .sq-xs {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+    }
+
+    .sq-logo {
+        width: 26px;
+        height: 26px;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
+    }
+
+    .sq-sm .sq-logo {
+        width: 24px;
+        height: 24px;
+    }
+
+    .sq-glyph {
+        font-size: 24px;
+        line-height: 1;
+    }
+
+    .sq-xs .sq-glyph {
+        font-size: 17px;
+    }
+
+    /* Glow de marca al pasar el cursor sobre la tarjeta */
+    .edu-card:hover .sq-icon,
+    .cert-item:hover .sq-icon,
+    .language-card:hover .sq-icon {
+        transform: translateY(-2px) scale(1.06);
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.5),
+            inset 0 -6px 14px -6px rgba(0, 0, 0, 0.35),
+            0 12px 28px -8px var(--brand, rgba(255, 255, 255, 0.4));
     }
 
     /* Grid Layout */
@@ -240,10 +435,6 @@ const languages = [
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .subsection-icon {
-        font-size: var(--text-2xl);
-    }
-
     /* Education Cards */
     .edu-cards {
         display: flex;
@@ -257,7 +448,10 @@ const languages = [
         gap: var(--space-4);
         padding: var(--space-5);
         border-radius: var(--radius-xl);
-        transition: all var(--transition-base);
+        transition:
+            transform var(--transition-base),
+            box-shadow var(--transition-base),
+            border-color var(--transition-base);
         opacity: 0;
         transform: translateX(-20px);
     }
@@ -268,13 +462,9 @@ const languages = [
     }
 
     .edu-card:hover {
-        transform: translateY(-2px) scale(1.02);
+        transform: translateY(-4px);
         box-shadow: var(--shadow-lg);
-    }
-
-    .edu-icon {
-        font-size: var(--text-3xl);
-        flex-shrink: 0;
+        border-color: var(--glass-border-strong);
     }
 
     .edu-content {
@@ -315,7 +505,10 @@ const languages = [
         gap: var(--space-4);
         padding: var(--space-4);
         border-radius: var(--radius-lg);
-        transition: all var(--transition-base);
+        transition:
+            transform var(--transition-base),
+            background var(--transition-base),
+            border-color var(--transition-base);
         opacity: 0;
         transform: translateX(-20px);
     }
@@ -327,11 +520,8 @@ const languages = [
 
     .language-card:hover {
         transform: translateX(10px);
-        background: rgba(99, 102, 241, 0.1);
-    }
-
-    .language-flag {
-        font-size: var(--text-2xl);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
     }
 
     .language-info {
@@ -366,7 +556,10 @@ const languages = [
         gap: var(--space-4);
         padding: var(--space-4);
         border-radius: var(--radius-lg);
-        transition: all var(--transition-base);
+        transition:
+            transform var(--transition-base),
+            background var(--transition-base),
+            border-color var(--transition-base);
         opacity: 0;
         transform: translateY(20px);
     }
@@ -378,13 +571,8 @@ const languages = [
 
     .cert-item:hover {
         transform: translateX(10px);
-        background: rgba(34, 211, 238, 0.05);
-        border-color: rgba(34, 211, 238, 0.3);
-    }
-
-    .cert-icon {
-        font-size: var(--text-xl);
-        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.25);
     }
 
     .cert-content {
@@ -411,9 +599,10 @@ const languages = [
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(34, 211, 238, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
         border-radius: 50%;
-        color: var(--color-secondary);
+        color: var(--color-secondary-light);
     }
 
     /* Responsive */
@@ -425,6 +614,7 @@ const languages = [
         .edu-card {
             flex-direction: column;
             text-align: center;
+            align-items: center;
         }
     }
 </style>
@@ -453,4 +643,21 @@ const languages = [
         .forEach((item) => {
             eduObserver.observe(item);
         });
+
+    // Luz ambiental que sigue el cursor
+    const eduSection = document.querySelector<HTMLElement>(".education");
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (eduSection && !reduceMotion) {
+        eduSection.addEventListener("pointermove", (e) => {
+            const r = eduSection.getBoundingClientRect();
+            eduSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
+            eduSection.style.setProperty("--my", `${e.clientY - r.top}px`);
+            eduSection.classList.add("glow-active");
+        });
+        eduSection.addEventListener("pointerleave", () => {
+            eduSection.classList.remove("glow-active");
+        });
+    }
 </script>

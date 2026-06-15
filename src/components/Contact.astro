@@ -1,5 +1,27 @@
 ---
 // Contact Section Component
+// Color de marca por canal; el logo cae a blanco si el color es muy oscuro
+function lum(hex: string) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+}
+function rgba(hex: string, a: number) {
+    const n = hex.replace("#", "");
+    const r = parseInt(n.slice(0, 2), 16);
+    const g = parseInt(n.slice(2, 4), 16);
+    const b = parseInt(n.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+function fillOf(hex: string) {
+    return lum(hex) < 0.25 ? "#f5f5f7" : hex;
+}
+function glowOf(hex: string) {
+    return lum(hex) < 0.25 ? "rgba(255, 255, 255, 0.45)" : rgba(hex, 0.6);
+}
+
 const contactLinks = [
     {
         name: "Email",
@@ -20,7 +42,7 @@ const contactLinks = [
         icon: "github",
         value: "Reales09",
         href: "https://github.com/Reales09",
-        color: "#fff",
+        color: "#181717",
     },
     {
         name: "Teléfono",
@@ -41,12 +63,13 @@ const contactLinks = [
         icon: "playstore",
         value: "Mis Apps Publicadas",
         href: "https://play.google.com/store/apps/developer?id=Gps+Port&hl=es_CO",
-        color: "#00C853",
+        color: "#34A853",
     },
 ];
 ---
 
 <section class="contact section" id="contact">
+    <div class="contact-glow" aria-hidden="true"></div>
     <div class="container">
         <!-- Section Header -->
         <div class="section-header">
@@ -73,7 +96,7 @@ const contactLinks = [
                         target="_blank"
                         rel="noopener noreferrer"
                         data-index={index}
-                        style={`--accent-color: ${contact.color}`}
+                        style={`--brand: ${glowOf(contact.color)}; --logo: ${fillOf(contact.color)}`}
                     >
                         <div class="contact-icon">
                             {contact.icon === "email" && (
@@ -146,7 +169,7 @@ const contactLinks = [
         <!-- CTA Banner -->
         <div class="cta-banner glass">
             <div class="cta-content">
-                <div class="cta-icon">🚀</div>
+                <div class="cta-icon"><span class="cta-glyph">🚀</span></div>
                 <div class="cta-text">
                     <h3>¿Tienes un proyecto en mente?</h3>
                     <p>
@@ -196,6 +219,31 @@ const contactLinks = [
 <style>
     .contact {
         position: relative;
+        overflow: hidden;
+    }
+
+    /* Luz ambiental que sigue el cursor */
+    .contact-glow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(
+            460px circle at var(--mx, 50%) var(--my, 30%),
+            rgba(255, 255, 255, 0.06),
+            transparent 72%
+        );
+        transition: opacity 450ms var(--ease-ios);
+    }
+
+    .contact.glow-active .contact-glow {
+        opacity: 1;
+    }
+
+    .contact .container {
+        position: relative;
+        z-index: 1;
     }
 
     /* Section Header */
@@ -209,11 +257,13 @@ const contactLinks = [
         align-items: center;
         gap: var(--space-2);
         padding: var(--space-2) var(--space-4);
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        background: var(--glass-bg-strong);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border-strong);
         border-radius: var(--radius-full);
         font-size: var(--text-sm);
-        color: var(--color-primary-light);
+        color: var(--color-text-muted);
         margin-bottom: var(--space-4);
     }
 
@@ -255,15 +305,17 @@ const contactLinks = [
     }
 
     .contact-card:hover {
-        transform: translateY(-4px) scale(1.02);
-        border-color: var(--accent-color);
-        box-shadow: 0 10px 40px -10px var(--accent-color);
+        transform: translateY(-4px);
+        border-color: var(--glass-border-strong);
+        box-shadow: 0 16px 44px -14px var(--brand, rgba(255, 255, 255, 0.4));
     }
 
     .contact-card:hover .contact-icon {
-        background: var(--accent-color);
-        color: white;
-        transform: scale(1.1) rotate(5deg);
+        transform: translateY(-2px) scale(1.06);
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.5),
+            inset 0 -6px 14px -6px rgba(0, 0, 0, 0.35),
+            0 12px 28px -8px var(--brand, rgba(255, 255, 255, 0.4));
     }
 
     .contact-card:hover .contact-arrow {
@@ -271,21 +323,50 @@ const contactLinks = [
         opacity: 1;
     }
 
+    /* Ícono en squircle glossy (mismo concepto) */
     .contact-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: var(--radius-lg);
+        position: relative;
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        color: var(--logo, #f5f5f7);
+        border-radius: 14px;
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.16) 0%,
+            rgba(255, 255, 255, 0.05) 55%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.4),
+            inset 0 -6px 14px -6px rgba(0, 0, 0, 0.35),
+            0 10px 20px -10px rgba(0, 0, 0, 0.6);
         flex-shrink: 0;
-        transition: all var(--transition-base);
+        transition:
+            transform var(--transition-base),
+            box-shadow var(--transition-base);
+    }
+
+    .contact-icon::before {
+        content: "";
+        position: absolute;
+        inset: 1px 1px auto 1px;
+        height: 46%;
+        border-radius: 13px 13px 50% 50%;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.32) 0%,
+            transparent 100%
+        );
+        pointer-events: none;
     }
 
     .contact-icon svg {
         width: 24px;
         height: 24px;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
     }
 
     .contact-info {
@@ -329,10 +410,10 @@ const contactLinks = [
         margin-bottom: var(--space-10);
         background: linear-gradient(
             135deg,
-            rgba(99, 102, 241, 0.1) 0%,
-            rgba(244, 114, 182, 0.1) 100%
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%
         );
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .cta-content {
@@ -342,8 +423,45 @@ const contactLinks = [
     }
 
     .cta-icon {
-        font-size: var(--text-4xl);
+        position: relative;
+        flex-shrink: 0;
+        width: 60px;
+        height: 60px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.05) 55%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow:
+            inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+            inset 0 -8px 18px -8px rgba(0, 0, 0, 0.35),
+            0 14px 26px -12px rgba(0, 0, 0, 0.6);
         animation: float 3s ease-in-out infinite;
+    }
+
+    .cta-icon::before {
+        content: "";
+        position: absolute;
+        inset: 1px 1px auto 1px;
+        height: 46%;
+        border-radius: 15px 15px 50% 50%;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.32) 0%,
+            transparent 100%
+        );
+        pointer-events: none;
+    }
+
+    .cta-glyph {
+        font-size: var(--text-3xl);
+        line-height: 1;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
     }
 
     .cta-text h3 {
@@ -421,4 +539,21 @@ const contactLinks = [
     document.querySelectorAll(".contact-card").forEach((item) => {
         contactObserver.observe(item);
     });
+
+    // Luz ambiental que sigue el cursor
+    const contactSection = document.querySelector<HTMLElement>(".contact");
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (contactSection && !reduceMotion) {
+        contactSection.addEventListener("pointermove", (e) => {
+            const r = contactSection.getBoundingClientRect();
+            contactSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
+            contactSection.style.setProperty("--my", `${e.clientY - r.top}px`);
+            contactSection.classList.add("glow-active");
+        });
+        contactSection.addEventListener("pointerleave", () => {
+            contactSection.classList.remove("glow-active");
+        });
+    }
 </script>
