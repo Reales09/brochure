@@ -7,7 +7,13 @@
         <div class="hero-content">
             <!-- Badge -->
             <div class="hero-badge animate-item">
-                <span class="badge-icon">📱</span>
+                <span class="badge-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"
+                        ></path>
+                    </svg>
+                </span>
                 <span>Desarrollador Mobile Senior</span>
             </div>
 
@@ -124,15 +130,31 @@
         <!-- Floating Elements -->
         <div class="hero-floating">
             <div class="floating-card card-1">
-                <span class="floating-icon">⚡</span>
+                <span class="floating-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2v11h3v9l7-12h-4l4-8z"></path>
+                    </svg>
+                </span>
                 <span>Performance</span>
             </div>
             <div class="floating-card card-2">
-                <span class="floating-icon">🎨</span>
+                <span class="floating-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37-1.34-1.34a.9959.9959 0 0 0-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z"
+                        ></path>
+                    </svg>
+                </span>
                 <span>UI/UX</span>
             </div>
             <div class="floating-card card-3">
-                <span class="floating-icon">🚀</span>
+                <span class="floating-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                        ></path>
+                    </svg>
+                </span>
                 <span>Escalable</span>
             </div>
         </div>
@@ -185,6 +207,12 @@
 
     .badge-icon {
         font-size: var(--text-lg);
+        display: inline-flex;
+    }
+
+    .badge-icon svg {
+        width: 16px;
+        height: 16px;
     }
 
     /* Title */
@@ -365,6 +393,12 @@
             transparent 100%
         );
         pointer-events: none;
+    }
+
+    .floating-icon svg {
+        width: 18px;
+        height: 18px;
+        color: var(--color-text);
     }
 
     .floating-card.card-1 {
