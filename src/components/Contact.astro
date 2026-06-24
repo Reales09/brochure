@@ -558,42 +558,53 @@ const contactLinks = [
 </style>
 
 <script>
-    // Intersection Observer for animations
-    const contactObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const delay =
-                        Number((entry.target as HTMLElement).dataset.index) *
-                        100;
-                    setTimeout(() => {
-                        entry.target.classList.add("visible");
-                    }, delay);
-                    contactObserver.unobserve(entry.target);
-                }
+    function initContact() {
+        const contactObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const delay =
+                            Number(
+                                (entry.target as HTMLElement).dataset.index,
+                            ) * 100;
+                        setTimeout(() => {
+                            entry.target.classList.add("visible");
+                        }, delay);
+                        contactObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 },
+        );
+
+        document.querySelectorAll(".contact-card").forEach((item) => {
+            contactObserver.observe(item);
+        });
+
+        // Luz ambiental que sigue el cursor
+        const contactSection =
+            document.querySelector<HTMLElement>(".contact");
+        const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (contactSection && !reduceMotion) {
+            contactSection.addEventListener("pointermove", (e) => {
+                const r = contactSection.getBoundingClientRect();
+                contactSection.style.setProperty(
+                    "--mx",
+                    `${e.clientX - r.left}px`,
+                );
+                contactSection.style.setProperty(
+                    "--my",
+                    `${e.clientY - r.top}px`,
+                );
+                contactSection.classList.add("glow-active");
             });
-        },
-        { threshold: 0.2 },
-    );
-
-    document.querySelectorAll(".contact-card").forEach((item) => {
-        contactObserver.observe(item);
-    });
-
-    // Luz ambiental que sigue el cursor
-    const contactSection = document.querySelector<HTMLElement>(".contact");
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (contactSection && !reduceMotion) {
-        contactSection.addEventListener("pointermove", (e) => {
-            const r = contactSection.getBoundingClientRect();
-            contactSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
-            contactSection.style.setProperty("--my", `${e.clientY - r.top}px`);
-            contactSection.classList.add("glow-active");
-        });
-        contactSection.addEventListener("pointerleave", () => {
-            contactSection.classList.remove("glow-active");
-        });
+            contactSection.addEventListener("pointerleave", () => {
+                contactSection.classList.remove("glow-active");
+            });
+        }
     }
+
+    document.addEventListener("astro:page-load", initContact);
 </script>

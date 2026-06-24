@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 export interface Props {
   lang?: "es" | "en";
 }
@@ -41,10 +43,11 @@ const { title, description } = meta;
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     <!-- Background Effects -->
-    <div class="bg-effects">
+    <div class="bg-effects" transition:persist>
       <div class="bg-gradient"></div>
       <div class="bg-grid"></div>
       <div class="bg-glow bg-glow-1"></div>
@@ -53,8 +56,8 @@ const { title, description } = meta;
     </div>
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="cursor-dot" id="cursor-dot" transition:persist></div>
+    <div class="cursor-ring" id="cursor-ring" transition:persist></div>
 
     <!-- Main Content -->
     <main>
@@ -232,11 +235,15 @@ const { title, description } = meta;
 </style>
 
 <script>
-  // Custom Cursor
-  const cursorDot = document.getElementById("cursor-dot");
-  const cursorRing = document.getElementById("cursor-ring");
+  // El cursor y el seguimiento se inicializan UNA sola vez (elementos persistidos
+  // con transition:persist), guardando contra doble inicialización entre navegaciones.
+  function initCursor() {
+    if ((window as any).__cursorInit) return;
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorRing = document.getElementById("cursor-ring");
+    if (!cursorDot || !cursorRing) return;
+    (window as any).__cursorInit = true;
 
-  if (cursorDot && cursorRing) {
     let mouseX = 0,
       mouseY = 0;
     let ringX = 0,
@@ -249,7 +256,6 @@ const { title, description } = meta;
       cursorDot.style.top = `${mouseY}px`;
     });
 
-    // Smooth ring follow
     function animateRing() {
       if (!cursorRing) return;
       ringX += (mouseX - ringX) * 0.15;
@@ -259,18 +265,26 @@ const { title, description } = meta;
       requestAnimationFrame(animateRing);
     }
     animateRing();
-
-    // Hover effect on interactive elements
-    const hoverElements = document.querySelectorAll(
-      "a, button, .card, .skill-card, .timeline-item",
-    );
-    hoverElements.forEach((el) => {
-      el.addEventListener("mouseenter", () =>
-        cursorRing.classList.add("hover"),
-      );
-      el.addEventListener("mouseleave", () =>
-        cursorRing.classList.remove("hover"),
-      );
-    });
   }
+
+  // Los listeners de hover se re-asocian en cada navegación (el contenido cambia)
+  function attachHover() {
+    const cursorRing = document.getElementById("cursor-ring");
+    if (!cursorRing) return;
+    document
+      .querySelectorAll("a, button, .card, .skill-card, .timeline-item")
+      .forEach((el) => {
+        el.addEventListener("mouseenter", () =>
+          cursorRing.classList.add("hover"),
+        );
+        el.addEventListener("mouseleave", () =>
+          cursorRing.classList.remove("hover"),
+        );
+      });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initCursor();
+    attachHover();
+  });
 </script>

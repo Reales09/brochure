@@ -471,49 +471,60 @@ const homeHref = lang === "en" ? "/en/" : "/";
 </style>
 
 <script>
-    const navbar = document.getElementById("navbar");
-    const navToggle = document.getElementById("nav-toggle");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navLinks = document.querySelectorAll(".nav-link, .mobile-link");
+    // El listener de scroll se asocia UNA vez (re-consulta el DOM actual en cada evento)
+    function bindScrollOnce() {
+        if ((window as any).__navScrollBound) return;
+        (window as any).__navScrollBound = true;
 
-    // Scroll effect
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-            navbar?.classList.add("scrolled");
-        } else {
-            navbar?.classList.remove("scrolled");
-        }
-
-        // Update active link based on section
-        const sections = document.querySelectorAll("section[id]");
-        let current = "";
-
-        sections.forEach((section) => {
-            const sectionTop = (section as HTMLElement).offsetTop;
-            if (window.scrollY >= sectionTop - 200) {
-                current = section.getAttribute("id") || "";
+        window.addEventListener("scroll", () => {
+            const navbar = document.getElementById("navbar");
+            if (window.scrollY > 50) {
+                navbar?.classList.add("scrolled");
+            } else {
+                navbar?.classList.remove("scrolled");
             }
+
+            // Resaltar el enlace activo según la sección visible
+            const sections = document.querySelectorAll("section[id]");
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = (section as HTMLElement).offsetTop;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute("id") || "";
+                }
+            });
+
+            document
+                .querySelectorAll(".nav-link, .mobile-link")
+                .forEach((link) => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${current}`) {
+                        link.classList.add("active");
+                    }
+                });
+        });
+    }
+
+    // El menú móvil se re-asocia en cada navegación (sus elementos se recrean)
+    function initNav() {
+        const navToggle = document.getElementById("nav-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        navToggle?.addEventListener("click", () => {
+            navToggle.classList.toggle("active");
+            mobileMenu?.classList.toggle("active");
         });
 
-        navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${current}`) {
-                link.classList.add("active");
-            }
+        document.querySelectorAll(".mobile-link").forEach((link) => {
+            link.addEventListener("click", () => {
+                navToggle?.classList.remove("active");
+                mobileMenu?.classList.remove("active");
+            });
         });
-    });
+    }
 
-    // Mobile menu toggle
-    navToggle?.addEventListener("click", () => {
-        navToggle.classList.toggle("active");
-        mobileMenu?.classList.toggle("active");
-    });
-
-    // Close mobile menu on link click
-    document.querySelectorAll(".mobile-link").forEach((link) => {
-        link.addEventListener("click", () => {
-            navToggle?.classList.remove("active");
-            mobileMenu?.classList.remove("active");
-        });
+    document.addEventListener("astro:page-load", () => {
+        bindScrollOnce();
+        initNav();
     });
 </script>

@@ -585,46 +585,55 @@ const t = {
 </style>
 
 <script define:vars={{ phrases: t.phrases }}>
-    // Typewriter effect
-    const typewriterElement = document.getElementById("typewriter");
-
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typeSpeed = 100;
-
-    function typewrite() {
+    // Typewriter effect — se reinicia en cada navegación (View Transitions).
+    // Un contador de generación detiene el timer de la página anterior.
+    function startTypewriter() {
+        const typewriterElement = document.getElementById("typewriter");
         if (!typewriterElement) return;
 
-        const currentPhrase = phrases[phraseIndex];
+        const gen = ((window as any).__twGen || 0) + 1;
+        (window as any).__twGen = gen;
 
-        if (isDeleting) {
-            typewriterElement.textContent = currentPhrase.substring(
-                0,
-                charIndex - 1,
-            );
-            charIndex--;
-            typeSpeed = 50;
-        } else {
-            typewriterElement.textContent = currentPhrase.substring(
-                0,
-                charIndex + 1,
-            );
-            charIndex++;
-            typeSpeed = 100;
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function typewrite() {
+            if ((window as any).__twGen !== gen || !typewriterElement) return;
+
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                typewriterElement.textContent = currentPhrase.substring(
+                    0,
+                    charIndex - 1,
+                );
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                typewriterElement.textContent = currentPhrase.substring(
+                    0,
+                    charIndex + 1,
+                );
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typewrite, typeSpeed);
         }
 
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(typewrite, typeSpeed);
+        typewrite();
     }
 
-    typewrite();
+    document.addEventListener("astro:page-load", startTypewriter);
 </script>

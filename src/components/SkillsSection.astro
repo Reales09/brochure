@@ -565,6 +565,7 @@ function resolve(skill: Skill) {
 </style>
 
 <script>
+  function initSkills() {
     // Revelar grupos al entrar en viewport
     const groupObserver = new IntersectionObserver(
         (entries) => {
@@ -661,4 +662,7 @@ function resolve(skill: Skill) {
             });
         }
     }
+  }
+
+  document.addEventListener("astro:page-load", initSkills);
 </script>

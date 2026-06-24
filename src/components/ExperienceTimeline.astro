@@ -521,25 +521,29 @@ const experiences = experiencesByLang[lang];
 </style>
 
 <script>
-    // Intersection Observer for timeline animations
-    const timelineObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const delay =
-                        Number((entry.target as HTMLElement).dataset.index) *
-                        200;
-                    setTimeout(() => {
-                        entry.target.classList.add("visible");
-                    }, delay);
-                    timelineObserver.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.2 },
-    );
+    function initTimeline() {
+        const timelineObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const delay =
+                            Number(
+                                (entry.target as HTMLElement).dataset.index,
+                            ) * 200;
+                        setTimeout(() => {
+                            entry.target.classList.add("visible");
+                        }, delay);
+                        timelineObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 },
+        );
 
-    document.querySelectorAll(".timeline-item").forEach((item) => {
-        timelineObserver.observe(item);
-    });
+        document.querySelectorAll(".timeline-item").forEach((item) => {
+            timelineObserver.observe(item);
+        });
+    }
+
+    document.addEventListener("astro:page-load", initTimeline);
 </script>

@@ -688,44 +688,48 @@ const languages = languagesByLang[lang];
 </style>
 
 <script>
-    // Intersection Observer for animations
-    const eduObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const delay =
-                        Number((entry.target as HTMLElement).dataset.index) *
-                        100;
-                    setTimeout(() => {
-                        entry.target.classList.add("visible");
-                    }, delay);
-                    eduObserver.unobserve(entry.target);
-                }
+    function initEducation() {
+        const eduObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const delay =
+                            Number(
+                                (entry.target as HTMLElement).dataset.index,
+                            ) * 100;
+                        setTimeout(() => {
+                            entry.target.classList.add("visible");
+                        }, delay);
+                        eduObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 },
+        );
+
+        document
+            .querySelectorAll(".edu-card, .language-card, .cert-item")
+            .forEach((item) => {
+                eduObserver.observe(item);
             });
-        },
-        { threshold: 0.2 },
-    );
 
-    document
-        .querySelectorAll(".edu-card, .language-card, .cert-item")
-        .forEach((item) => {
-            eduObserver.observe(item);
-        });
-
-    // Luz ambiental que sigue el cursor
-    const eduSection = document.querySelector<HTMLElement>(".education");
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (eduSection && !reduceMotion) {
-        eduSection.addEventListener("pointermove", (e) => {
-            const r = eduSection.getBoundingClientRect();
-            eduSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
-            eduSection.style.setProperty("--my", `${e.clientY - r.top}px`);
-            eduSection.classList.add("glow-active");
-        });
-        eduSection.addEventListener("pointerleave", () => {
-            eduSection.classList.remove("glow-active");
-        });
+        // Luz ambiental que sigue el cursor
+        const eduSection = document.querySelector<HTMLElement>(".education");
+        const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (eduSection && !reduceMotion) {
+            eduSection.addEventListener("pointermove", (e) => {
+                const r = eduSection.getBoundingClientRect();
+                eduSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                eduSection.style.setProperty("--my", `${e.clientY - r.top}px`);
+                eduSection.classList.add("glow-active");
+            });
+            eduSection.addEventListener("pointerleave", () => {
+                eduSection.classList.remove("glow-active");
+            });
+        }
     }
+
+    document.addEventListener("astro:page-load", initEducation);
 </script>
