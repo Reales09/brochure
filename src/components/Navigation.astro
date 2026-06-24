@@ -30,9 +30,8 @@ const navLinks = [
     },
 ];
 
-// Rutas para el selector de idioma
+// El logo apunta al home del idioma actual
 const homeHref = lang === "en" ? "/en/" : "/";
-const altHref = lang === "en" ? "/" : "/en/";
 ---
 
 <nav class="navbar" id="navbar">
@@ -69,14 +68,14 @@ const altHref = lang === "en" ? "/" : "/en/";
             <!-- Selector de idioma -->
             <div class="lang-switch" role="group" aria-label="Language">
                 <a
-                    href={homeHref}
+                    href="/"
                     class={`lang-opt ${lang === "es" ? "active" : ""}`}
                     aria-current={lang === "es" ? "true" : "false"}
                 >
                     ES
                 </a>
                 <a
-                    href={altHref}
+                    href="/en/"
                     class={`lang-opt ${lang === "en" ? "active" : ""}`}
                     aria-current={lang === "en" ? "true" : "false"}
                 >
