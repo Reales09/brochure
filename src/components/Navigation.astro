@@ -1,38 +1,44 @@
 ---
 // Navigation Component
+const { lang = "es" } = Astro.props;
+
 const navLinks = [
     {
         href: "#hero",
-        label: "Inicio",
+        label: { es: "Inicio", en: "Home" },
         path: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z",
     },
     {
         href: "#skills",
-        label: "Habilidades",
+        label: { es: "Habilidades", en: "Skills" },
         path: "M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z",
     },
     {
         href: "#experience",
-        label: "Experiencia",
+        label: { es: "Experiencia", en: "Experience" },
         path: "M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z",
     },
     {
         href: "#education",
-        label: "Educación",
+        label: { es: "Educación", en: "Education" },
         path: "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
     },
     {
         href: "#contact",
-        label: "Contacto",
+        label: { es: "Contacto", en: "Contact" },
         path: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z",
     },
 ];
+
+// Rutas para el selector de idioma
+const homeHref = lang === "en" ? "/en/" : "/";
+const altHref = lang === "en" ? "/" : "/en/";
 ---
 
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <!-- Logo -->
-        <a href="#hero" class="nav-logo">
+        <a href={homeHref} class="nav-logo">
             <span class="logo-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5f5f7">
                     <path
@@ -53,16 +59,36 @@ const navLinks = [
                                 <path d={link.path} />
                             </svg>
                         </span>
-                        <span>{link.label}</span>
+                        <span>{link.label[lang]}</span>
                     </a>
                 ))
             }
         </div>
 
-        <!-- Mobile Menu Button -->
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-            <span class="hamburger"></span>
-        </button>
+        <div class="nav-right">
+            <!-- Selector de idioma -->
+            <div class="lang-switch" role="group" aria-label="Language">
+                <a
+                    href={homeHref}
+                    class={`lang-opt ${lang === "es" ? "active" : ""}`}
+                    aria-current={lang === "es" ? "true" : "false"}
+                >
+                    ES
+                </a>
+                <a
+                    href={altHref}
+                    class={`lang-opt ${lang === "en" ? "active" : ""}`}
+                    aria-current={lang === "en" ? "true" : "false"}
+                >
+                    EN
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span class="hamburger"></span>
+            </button>
+        </div>
     </div>
 
     <!-- Mobile Menu -->
@@ -75,7 +101,7 @@ const navLinks = [
                             <path d={link.path} />
                         </svg>
                     </span>
-                    <span>{link.label}</span>
+                    <span>{link.label[lang]}</span>
                 </a>
             ))
         }
@@ -108,6 +134,48 @@ const navLinks = [
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+    }
+
+    /* Selector de idioma */
+    .lang-switch {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px;
+        gap: 2px;
+        border-radius: var(--radius-full);
+        background: var(--glass-bg-strong);
+        border: 1px solid var(--glass-border-strong);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+
+    .lang-opt {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 34px;
+        padding: 5px 10px;
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+        transition: all var(--transition-fast);
+    }
+
+    .lang-opt:hover {
+        color: var(--color-text);
+    }
+
+    .lang-opt.active {
+        background: #f5f5f7;
+        color: #000;
     }
 
     /* Logo */

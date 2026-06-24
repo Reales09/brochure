@@ -1,5 +1,5 @@
 ---
-// Main Index Page
+// Página principal — Español
 import Layout from "../layouts/Layout.astro";
 import Navigation from "../components/Navigation.astro";
 import Hero from "../components/Hero.astro";
@@ -8,45 +8,16 @@ import SkillsSection from "../components/SkillsSection.astro";
 import ExperienceTimeline from "../components/ExperienceTimeline.astro";
 import Education from "../components/Education.astro";
 import Contact from "../components/Contact.astro";
+
+const lang = "es";
 ---
 
-<Layout>
-	<Navigation />
-	<Hero />
-	<TechMarquee />
-	<SkillsSection />
-	<ExperienceTimeline />
-	<Education />
-	<Contact />
+<Layout lang={lang}>
+	<Navigation lang={lang} />
+	<Hero lang={lang} />
+	<TechMarquee lang={lang} />
+	<SkillsSection lang={lang} />
+	<ExperienceTimeline lang={lang} />
+	<Education lang={lang} />
+	<Contact lang={lang} />
 </Layout>
-
-<style is:global>
-	/* Smooth scroll for anchor links */
-	html {
-		scroll-behavior: smooth;
-		scroll-padding-top: 80px;
-	}
-
-	/* Add spacing for fixed navbar */
-	main {
-		position: relative;
-	}
-
-	/* Section dividers */
-	section:not(:first-child)::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 100px;
-		height: 1px;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			var(--color-primary),
-			transparent
-		);
-		opacity: 0.3;
-	}
-</style>

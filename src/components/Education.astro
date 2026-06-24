@@ -47,64 +47,97 @@ function resolve(brand?: string, custom?: string): Icn {
     return { svg: cu, fill: "#f5f5f7", glow: "rgba(255, 255, 255, 0.4)" };
 }
 
-const education = [
-    {
-        degree: "Ingeniería de Sistemas",
-        institution: "Universidad de Colombia",
-        period: "2014 – 2019",
-        custom: "school",
-    },
-    {
-        degree: "Diplomado en Innovación",
-        institution: "Universidad de Colombia",
-        period: "Sep 2016 – Sep 2017",
-        custom: "bulb",
-    },
-];
+const { lang = "es" } = Astro.props;
 
-const certifications = [
-    {
-        name: "Flutter: Tu guía completa para iOS y Android",
-        provider: "Udemy",
-        brand: "flutter",
+const t = {
+    es: {
+        badge: "Formación",
+        title: "Educación &",
+        accent: "Certificaciones",
+        subtitle: "Aprendizaje continuo para mantenerse a la vanguardia",
+        eduFormal: "Educación Formal",
+        idiomas: "Idiomas",
+        certs: "Certificaciones & Cursos",
     },
-    {
-        name: "Firebase para Android con Kotlin de la A a la Z",
-        provider: "Udemy",
-        brand: "firebase",
+    en: {
+        badge: "Education",
+        title: "Education &",
+        accent: "Certifications",
+        subtitle: "Continuous learning to stay at the cutting edge",
+        eduFormal: "Formal Education",
+        idiomas: "Languages",
+        certs: "Certifications & Courses",
     },
-    {
-        name: "Kotlin Multiplatform: Curso intensivo para Android y iOS",
-        provider: "Udemy",
-        brand: "kotlin",
-    },
-    {
-        name: "JavaScript avanzado: Buenas prácticas",
-        provider: "LinkedIn Learning",
-        brand: "javascript",
-    },
-    {
-        name: "Fundamentos del desarrollo web: Full Stack o Front-end",
-        provider: "LinkedIn Learning",
-        brand: "html5",
-    },
-    {
-        name: "JavaScript esencial",
-        provider: "LinkedIn Learning",
-        brand: "javascript",
-    },
-    {
-        name: "Inglés B2",
-        provider: "Certificación Internacional",
-        custom: "language",
-    },
-];
+}[lang];
 
-const languages = [
-    { name: "Español", level: "Nativo", flag: "🇨🇴" },
-    { name: "Creole", level: "Nativo/Bilingüe", flag: "🏝️" },
-    { name: "Inglés", level: "B2 (Intermedio Alto)", flag: "🇺🇸" },
-];
+const educationByLang = {
+    es: [
+        {
+            degree: "Ingeniería de Sistemas",
+            institution: "Universidad de Colombia",
+            period: "2014 – 2019",
+            custom: "school",
+        },
+        {
+            degree: "Diplomado en Innovación",
+            institution: "Universidad de Colombia",
+            period: "Sep 2016 – Sep 2017",
+            custom: "bulb",
+        },
+    ],
+    en: [
+        {
+            degree: "Systems Engineering",
+            institution: "Universidad de Colombia",
+            period: "2014 – 2019",
+            custom: "school",
+        },
+        {
+            degree: "Diploma in Innovation",
+            institution: "Universidad de Colombia",
+            period: "Sep 2016 – Sep 2017",
+            custom: "bulb",
+        },
+    ],
+};
+
+const certificationsByLang = {
+    es: [
+        { name: "Flutter: Tu guía completa para iOS y Android", provider: "Udemy", brand: "flutter" },
+        { name: "Firebase para Android con Kotlin de la A a la Z", provider: "Udemy", brand: "firebase" },
+        { name: "Kotlin Multiplatform: Curso intensivo para Android y iOS", provider: "Udemy", brand: "kotlin" },
+        { name: "JavaScript avanzado: Buenas prácticas", provider: "LinkedIn Learning", brand: "javascript" },
+        { name: "Fundamentos del desarrollo web: Full Stack o Front-end", provider: "LinkedIn Learning", brand: "html5" },
+        { name: "JavaScript esencial", provider: "LinkedIn Learning", brand: "javascript" },
+        { name: "Inglés B2", provider: "Certificación Internacional", custom: "language" },
+    ],
+    en: [
+        { name: "Flutter: Your complete guide for iOS and Android", provider: "Udemy", brand: "flutter" },
+        { name: "Firebase for Android with Kotlin from A to Z", provider: "Udemy", brand: "firebase" },
+        { name: "Kotlin Multiplatform: Intensive course for Android and iOS", provider: "Udemy", brand: "kotlin" },
+        { name: "Advanced JavaScript: Best Practices", provider: "LinkedIn Learning", brand: "javascript" },
+        { name: "Web Development Fundamentals: Full Stack or Front-end", provider: "LinkedIn Learning", brand: "html5" },
+        { name: "Essential JavaScript", provider: "LinkedIn Learning", brand: "javascript" },
+        { name: "English B2", provider: "International Certification", custom: "language" },
+    ],
+};
+
+const languagesByLang = {
+    es: [
+        { name: "Español", level: "Nativo", flag: "🇨🇴" },
+        { name: "Creole", level: "Nativo/Bilingüe", flag: "🏝️" },
+        { name: "Inglés", level: "B2 (Intermedio Alto)", flag: "🇺🇸" },
+    ],
+    en: [
+        { name: "Spanish", level: "Native", flag: "🇨🇴" },
+        { name: "Creole", level: "Native/Bilingual", flag: "🏝️" },
+        { name: "English", level: "B2 (Upper Intermediate)", flag: "🇺🇸" },
+    ],
+};
+
+const education = educationByLang[lang];
+const certifications = certificationsByLang[lang];
+const languages = languagesByLang[lang];
 ---
 
 <section class="education section" id="education">
@@ -123,13 +156,13 @@ const languages = [
                         d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"
                     ></path>
                 </svg>
-                <span>Formación</span>
+                <span>{t.badge}</span>
             </span>
             <h2 class="section-title">
-                Educación & <span class="gradient-text">Certificaciones</span>
+                {t.title} <span class="gradient-text">{t.accent}</span>
             </h2>
             <p class="section-subtitle">
-                Aprendizaje continuo para mantenerse a la vanguardia
+                {t.subtitle}
             </p>
         </div>
 
@@ -149,7 +182,7 @@ const languages = [
                                 <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z" />
                             </svg>
                         </span>
-                        Educación Formal
+                        {t.eduFormal}
                     </h3>
                     <div class="edu-cards">
                         {
@@ -200,7 +233,7 @@ const languages = [
                                 <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" />
                             </svg>
                         </span>
-                        Idiomas
+                        {t.idiomas}
                     </h3>
                     <div class="languages-grid">
                         {
@@ -241,7 +274,7 @@ const languages = [
                             <path d="M9.68 13.69 12 11.93l2.31 1.76-.88-2.85L15.75 9h-2.84L12 6.19 11.09 9H8.25l2.31 1.84-.88 2.85zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6z" />
                         </svg>
                     </span>
-                    Certificaciones & Cursos
+                    {t.certs}
                 </h3>
                 <div class="cert-list">
                     {

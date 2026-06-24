@@ -1,0 +1,23 @@
+---
+// Main Page — English
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Hero from "../../components/Hero.astro";
+import TechMarquee from "../../components/TechMarquee.astro";
+import SkillsSection from "../../components/SkillsSection.astro";
+import ExperienceTimeline from "../../components/ExperienceTimeline.astro";
+import Education from "../../components/Education.astro";
+import Contact from "../../components/Contact.astro";
+
+const lang = "en";
+---
+
+<Layout lang={lang}>
+	<Navigation lang={lang} />
+	<Hero lang={lang} />
+	<TechMarquee lang={lang} />
+	<SkillsSection lang={lang} />
+	<ExperienceTimeline lang={lang} />
+	<Education lang={lang} />
+	<Contact lang={lang} />
+</Layout>

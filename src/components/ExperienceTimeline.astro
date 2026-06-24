@@ -1,67 +1,150 @@
 ---
 // Experience Timeline Component
-const experiences = [
-    {
-        company: "Middlesoft",
-        role: "Desarrollador Mobile",
-        period: "Nov 2024 – Actualidad",
-        location: "Montevideo, Uruguay",
-        type: "current",
-        description:
-            "Desarrollo y mantenimiento de aplicaciones móviles utilizando Flutter y Android nativo.",
-        highlights: [
-            "Participación activa en decisiones de arquitectura y definición de patrones",
-            "Colaboración con producto, UX y QA para entregas de calidad",
-            "Mentoría de otros desarrolladores mediante code reviews",
-        ],
-        technologies: ["Flutter", "Android", "Clean Architecture"],
+const { lang = "es" } = Astro.props;
+
+const t = {
+    es: {
+        badge: "Trayectoria",
+        title: "Experiencia",
+        accent: "Profesional",
+        subtitle: "Construyendo soluciones de alto impacto desde 2016",
     },
-    {
-        company: "Finanzauto",
-        role: "Desarrollador Mobile",
-        period: "Oct 2023 – Nov 2024",
-        location: "Colombia",
-        type: "past",
-        description:
-            "Desarrollo de funcionalidades para aplicaciones móviles orientadas al sector financiero.",
-        highlights: [
-            "Integración de servicios REST y manejo de autenticación segura",
-            "Optimización de tiempo de respuesta y experiencia de usuario",
-            "Participación en planificación de sprints y estimación de tareas",
-        ],
-        technologies: ["React Native", "REST API", "Firebase"],
+    en: {
+        badge: "Career",
+        title: "Professional",
+        accent: "Experience",
+        subtitle: "Building high-impact solutions since 2016",
     },
-    {
-        company: "AZ Smart Technology",
-        role: "Desarrollador Mobile",
-        period: "Abr 2022 – Sep 2023",
-        location: "Colombia",
-        type: "past",
-        description:
-            "Desarrollo de aplicaciones Android y Flutter para soluciones de rastreo, logística y gestión.",
-        highlights: [
-            "Apps publicadas: VigiAZ, CeSeM, GpsPort, TrackMe, CargaZ, RutaZ, BYAZ",
-            "Implementación de nuevas funcionalidades y mantenimiento correctivo",
-            "Coordinación de entregas con clientes internos y externos",
-        ],
-        technologies: ["Android", "Flutter", "Google Play", "App Store"],
-    },
-    {
-        company: "Teleperformance",
-        role: "Desarrollador / Especialista en Soporte Técnico Microsoft",
-        period: "Dic 2016 – Mar 2022",
-        location: "Colombia",
-        type: "past",
-        description:
-            "Atención y soporte técnico a usuarios Microsoft, resolviendo incidencias con altos niveles de satisfacción.",
-        highlights: [
-            "Referente técnico en equipos mobile con buenas prácticas",
-            "Mentoría a desarrolladores junior y de nivel medio",
-            "Participación en iniciativas de mejora de procesos",
-        ],
-        technologies: ["Microsoft", "Liderazgo", "Soporte Técnico"],
-    },
-];
+}[lang];
+
+const experiencesByLang = {
+    es: [
+        {
+            company: "Middlesoft",
+            role: "Desarrollador Mobile",
+            period: "Nov 2024 – Actualidad",
+            location: "Montevideo, Uruguay",
+            type: "current",
+            description:
+                "Desarrollo y mantenimiento de aplicaciones móviles utilizando Flutter y Android nativo.",
+            highlights: [
+                "Participación activa en decisiones de arquitectura y definición de patrones",
+                "Colaboración con producto, UX y QA para entregas de calidad",
+                "Mentoría de otros desarrolladores mediante code reviews",
+            ],
+            technologies: ["Flutter", "Android", "Clean Architecture"],
+        },
+        {
+            company: "Finanzauto",
+            role: "Desarrollador Mobile",
+            period: "Oct 2023 – Nov 2024",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Desarrollo de funcionalidades para aplicaciones móviles orientadas al sector financiero.",
+            highlights: [
+                "Integración de servicios REST y manejo de autenticación segura",
+                "Optimización de tiempo de respuesta y experiencia de usuario",
+                "Participación en planificación de sprints y estimación de tareas",
+            ],
+            technologies: ["React Native", "REST API", "Firebase"],
+        },
+        {
+            company: "AZ Smart Technology",
+            role: "Desarrollador Mobile",
+            period: "Abr 2022 – Sep 2023",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Desarrollo de aplicaciones Android y Flutter para soluciones de rastreo, logística y gestión.",
+            highlights: [
+                "Apps publicadas: VigiAZ, CeSeM, GpsPort, TrackMe, CargaZ, RutaZ, BYAZ",
+                "Implementación de nuevas funcionalidades y mantenimiento correctivo",
+                "Coordinación de entregas con clientes internos y externos",
+            ],
+            technologies: ["Android", "Flutter", "Google Play", "App Store"],
+        },
+        {
+            company: "Teleperformance",
+            role: "Desarrollador / Especialista en Soporte Técnico Microsoft",
+            period: "Dic 2016 – Mar 2022",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Atención y soporte técnico a usuarios Microsoft, resolviendo incidencias con altos niveles de satisfacción.",
+            highlights: [
+                "Referente técnico en equipos mobile con buenas prácticas",
+                "Mentoría a desarrolladores junior y de nivel medio",
+                "Participación en iniciativas de mejora de procesos",
+            ],
+            technologies: ["Microsoft", "Liderazgo", "Soporte Técnico"],
+        },
+    ],
+    en: [
+        {
+            company: "Middlesoft",
+            role: "Mobile Developer",
+            period: "Nov 2024 – Present",
+            location: "Montevideo, Uruguay",
+            type: "current",
+            description:
+                "Development and maintenance of mobile applications using Flutter and native Android.",
+            highlights: [
+                "Active participation in architecture decisions and pattern definition",
+                "Collaboration with product, UX and QA for quality deliveries",
+                "Mentoring other developers through code reviews",
+            ],
+            technologies: ["Flutter", "Android", "Clean Architecture"],
+        },
+        {
+            company: "Finanzauto",
+            role: "Mobile Developer",
+            period: "Oct 2023 – Nov 2024",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Development of features for mobile applications focused on the financial sector.",
+            highlights: [
+                "Integration of REST services and secure authentication handling",
+                "Optimization of response time and user experience",
+                "Participation in sprint planning and task estimation",
+            ],
+            technologies: ["React Native", "REST API", "Firebase"],
+        },
+        {
+            company: "AZ Smart Technology",
+            role: "Mobile Developer",
+            period: "Apr 2022 – Sep 2023",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Development of Android and Flutter applications for tracking, logistics and management solutions.",
+            highlights: [
+                "Published apps: VigiAZ, CeSeM, GpsPort, TrackMe, CargaZ, RutaZ, BYAZ",
+                "Implementation of new features and corrective maintenance",
+                "Coordination of deliveries with internal and external clients",
+            ],
+            technologies: ["Android", "Flutter", "Google Play", "App Store"],
+        },
+        {
+            company: "Teleperformance",
+            role: "Developer / Microsoft Technical Support Specialist",
+            period: "Dec 2016 – Mar 2022",
+            location: "Colombia",
+            type: "past",
+            description:
+                "Microsoft user support, resolving incidents with high satisfaction levels.",
+            highlights: [
+                "Technical reference in mobile teams with best practices",
+                "Mentoring junior and mid-level developers",
+                "Participation in process improvement initiatives",
+            ],
+            technologies: ["Microsoft", "Leadership", "Technical Support"],
+        },
+    ],
+};
+
+const experiences = experiencesByLang[lang];
 ---
 
 <section class="experience section" id="experience">
@@ -79,13 +162,13 @@ const experiences = [
                         d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"
                     ></path>
                 </svg>
-                <span>Trayectoria</span>
+                <span>{t.badge}</span>
             </span>
             <h2 class="section-title">
-                Experiencia <span class="gradient-text">Profesional</span>
+                {t.title} <span class="gradient-text">{t.accent}</span>
             </h2>
             <p class="section-subtitle">
-                Construyendo soluciones móviles de alto impacto desde 2016
+                {t.subtitle}
             </p>
         </div>
 

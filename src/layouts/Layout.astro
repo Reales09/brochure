@@ -1,17 +1,30 @@
 ---
 export interface Props {
-  title?: string;
-  description?: string;
+  lang?: "es" | "en";
 }
 
-const {
-  title = "Reales Myles Clarence | Mobile Developer Senior",
-  description = "Desarrollador Mobile Senior especializado en Flutter, Android, iOS y React Native. +8 años de experiencia construyendo aplicaciones móviles de alto impacto.",
-} = Astro.props;
+const { lang = "es" } = Astro.props;
+
+const meta = {
+  es: {
+    title: "Reales Myles Clarence | Full Stack Mobile Developer",
+    description:
+      "Full Stack Mobile Developer con +8 años de experiencia. Especializado en Flutter, Android e iOS, con dominio de frontend, backend, cloud (Docker/Kubernetes) e Inteligencia Artificial aplicada.",
+    rights: "Todos los derechos reservados.",
+  },
+  en: {
+    title: "Reales Myles Clarence | Full Stack Mobile Developer",
+    description:
+      "Full Stack Mobile Developer with 8+ years of experience. Specialized in Flutter, Android and iOS, with command of frontend, backend, cloud (Docker/Kubernetes) and applied Artificial Intelligence.",
+    rights: "All rights reserved.",
+  },
+}[lang];
+
+const { title, description } = meta;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,8 +65,9 @@ const {
     <footer class="footer">
       <div class="container">
         <p class="footer-text">
-          © 2026 <span class="gradient-text">Reales Myles Clarence</span>. Todos
-          los derechos reservados.
+          © 2026 <span class="gradient-text">Reales Myles Clarence</span>. {
+            meta.rights
+          }
         </p>
       </div>
     </footer>

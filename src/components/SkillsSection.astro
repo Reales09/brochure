@@ -3,7 +3,20 @@
 import * as si from "simple-icons";
 
 // Logos de marca (simple-icons)
+// ChatGPT / OpenAI fue retirado de simple-icons → logotipo oficial propio
+const openai = {
+    title: "ChatGPT",
+    hex: "10A37F",
+    path: "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z",
+};
+
 const iconMap: Record<string, any> = {
+    claude: si.siClaude,
+    anthropic: si.siAnthropic,
+    chatgpt: openai,
+    gemini: si.siGooglegemini,
+    copilot: si.siGithubcopilot,
+    cursor: si.siCursor,
     flutter: si.siFlutter,
     android: si.siAndroid,
     swift: si.siSwift,
@@ -35,12 +48,33 @@ const customIcons: Record<string, string> = {
     heart: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>',
 };
 
-type Skill = { name: string; brand?: string; custom?: string };
-type Category = { title: string; skills: Skill[] };
+const { lang = "es" } = Astro.props;
+const t = {
+    es: {
+        badge: "Stack Tecnológico",
+        title: "Habilidades",
+        accent: "Técnicas",
+        subtitle: "+8 años perfeccionando el arte del desarrollo de software",
+        stats: ["Años de Experiencia", "Proyectos Entregados", "Apps en Tiendas"],
+    },
+    en: {
+        badge: "Tech Stack",
+        title: "Technical",
+        accent: "Skills",
+        subtitle: "8+ years mastering the craft of software development",
+        stats: ["Years of Experience", "Projects Delivered", "Apps in Stores"],
+    },
+}[lang];
+
+type Loc = string | { es: string; en: string };
+type Skill = { name: Loc; brand?: string; custom?: string };
+type Category = { title: Loc; skills: Skill[] };
+
+const tr = (v: Loc) => (typeof v === "string" ? v : v[lang]);
 
 const skillCategories: Category[] = [
     {
-        title: "Desarrollo Mobile",
+        title: { es: "Desarrollo Mobile", en: "Mobile Development" },
         skills: [
             { name: "Flutter", brand: "flutter" },
             { name: "Android · Kotlin", brand: "android" },
@@ -50,7 +84,19 @@ const skillCategories: Category[] = [
         ],
     },
     {
-        title: "Lenguajes",
+        title: { es: "Inteligencia Artificial", en: "Artificial Intelligence" },
+        skills: [
+            { name: "Claude", brand: "claude" },
+            { name: "Claude Code", brand: "claude" },
+            { name: "Anthropic API", brand: "anthropic" },
+            { name: "ChatGPT", brand: "chatgpt" },
+            { name: "Gemini", brand: "gemini" },
+            { name: "GitHub Copilot", brand: "copilot" },
+            { name: "Cursor", brand: "cursor" },
+        ],
+    },
+    {
+        title: { es: "Lenguajes", en: "Languages" },
         skills: [
             { name: "Dart", brand: "dart" },
             { name: "Kotlin", brand: "kotlin" },
@@ -70,7 +116,7 @@ const skillCategories: Category[] = [
         ],
     },
     {
-        title: "Bases de Datos",
+        title: { es: "Bases de Datos", en: "Databases" },
         skills: [
             { name: "PostgreSQL", brand: "postgresql" },
             { name: "MySQL", brand: "mysql" },
@@ -89,13 +135,16 @@ const skillCategories: Category[] = [
         ],
     },
     {
-        title: "Habilidades Blandas",
+        title: { es: "Habilidades Blandas", en: "Soft Skills" },
         skills: [
-            { name: "Liderazgo", custom: "star" },
-            { name: "Mentoría", custom: "school" },
-            { name: "Comunicación", custom: "chat" },
-            { name: "Trabajo en Equipo", custom: "people" },
-            { name: "Inteligencia Emocional", custom: "heart" },
+            { name: { es: "Liderazgo", en: "Leadership" }, custom: "star" },
+            { name: { es: "Mentoría", en: "Mentoring" }, custom: "school" },
+            { name: { es: "Comunicación", en: "Communication" }, custom: "chat" },
+            { name: { es: "Trabajo en Equipo", en: "Teamwork" }, custom: "people" },
+            {
+                name: { es: "Inteligencia Emocional", en: "Emotional Intelligence" },
+                custom: "heart",
+            },
         ],
     },
 ];
@@ -147,13 +196,13 @@ function resolve(skill: Skill) {
                         d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"
                     ></path>
                 </svg>
-                <span>Stack Tecnológico</span>
+                <span>{t.badge}</span>
             </span>
             <h2 class="section-title">
-                Habilidades <span class="gradient-text">Técnicas</span>
+                {t.title} <span class="gradient-text">{t.accent}</span>
             </h2>
             <p class="section-subtitle">
-                +8 años perfeccionando el arte del desarrollo mobile
+                {t.subtitle}
             </p>
         </div>
 
@@ -167,7 +216,7 @@ function resolve(skill: Skill) {
                         style={`--gi:${catIndex}`}
                     >
                         <div class="group-head">
-                            <h3 class="group-title">{category.title}</h3>
+                            <h3 class="group-title">{tr(category.title)}</h3>
                         </div>
                         <div class="app-grid">
                             {category.skills.map((skill, sIdx) => {
@@ -183,12 +232,12 @@ function resolve(skill: Skill) {
                                                 viewBox="0 0 24 24"
                                                 fill={r.fill}
                                                 role="img"
-                                                aria-label={skill.name}
+                                                aria-label={tr(skill.name)}
                                                 set:html={r.inner}
                                             />
                                         </div>
                                         <span class="app-label">
-                                            {skill.name}
+                                            {tr(skill.name)}
                                         </span>
                                     </div>
                                 );
@@ -203,15 +252,15 @@ function resolve(skill: Skill) {
         <div class="stats-row">
             <div class="stat-item glass">
                 <span class="stat-number" data-count="8">0</span>
-                <span class="stat-label">Años de Experiencia</span>
+                <span class="stat-label">{t.stats[0]}</span>
             </div>
             <div class="stat-item glass">
                 <span class="stat-number" data-count="20">0</span>
-                <span class="stat-label">Proyectos Entregados</span>
+                <span class="stat-label">{t.stats[1]}</span>
             </div>
             <div class="stat-item glass">
                 <span class="stat-number" data-count="10">0</span>
-                <span class="stat-label">Apps en Tiendas</span>
+                <span class="stat-label">{t.stats[2]}</span>
             </div>
         </div>
     </div>
