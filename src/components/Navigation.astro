@@ -460,6 +460,19 @@ const navLinks = [
         .mobile-menu {
             display: block;
         }
+
+        /* Rendimiento: sin blur en tiempo real sobre la barra fija al scrollear */
+        .navbar.scrolled {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .mobile-menu {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: rgba(10, 10, 12, 0.96);
+        }
     }
 </style>
 

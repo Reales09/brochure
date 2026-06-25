@@ -599,12 +599,13 @@ const contactLinks = [
         contactObserver.observe(item);
     });
 
-    // Luz ambiental que sigue el cursor
+    // Luz ambiental que sigue el cursor (solo con puntero fino)
     const contactSection = document.querySelector<HTMLElement>(".contact");
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (contactSection && !reduceMotion) {
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (contactSection && !reduceMotion && finePointer) {
         contactSection.addEventListener("pointermove", (e) => {
             const r = contactSection.getBoundingClientRect();
             contactSection.style.setProperty("--mx", `${e.clientX - r.left}px`);

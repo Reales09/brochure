@@ -551,6 +551,12 @@ function resolve(skill: Skill) {
         .stats-row {
             grid-template-columns: repeat(2, 1fr);
         }
+
+        /* Rendimiento: sin blur en tiempo real en los íconos al scrollear */
+        .app-icon {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
     }
 
     .stat-item {
@@ -645,12 +651,14 @@ function resolve(skill: Skill) {
         }, stepTime);
     }
 
-    // Tilt 3D interactivo siguiendo el cursor
+    // Tilt 3D + luz ambiental: solo con puntero fino (evita jank al hacer
+    // scroll en móvil, donde pointermove se dispara al arrastrar).
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
     ).matches;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-    if (!reduceMotion) {
+    if (!reduceMotion && finePointer) {
         document.querySelectorAll<HTMLElement>(".app-icon").forEach((icon) => {
             icon.addEventListener("pointermove", (e) => {
                 const r = icon.getBoundingClientRect();

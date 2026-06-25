@@ -152,6 +152,18 @@ const description =
     animation: float 24s ease-in-out infinite 2s;
   }
 
+  /* Rendimiento móvil: blur enorme + animación de capas grandes es costoso.
+     Reducimos el blur y detenemos la animación; un tercer glow se oculta. */
+  @media (max-width: 768px) {
+    .bg-glow {
+      filter: blur(70px);
+      animation: none !important;
+    }
+    .bg-glow-2 {
+      display: none;
+    }
+  }
+
   /* === Custom Cursor === */
   .cursor-dot {
     position: fixed;
@@ -256,11 +268,12 @@ const description =
   });
   applyLang(savedLang);
 
-  // === Cursor personalizado ===
+  // === Cursor personalizado (solo en dispositivos con puntero fino) ===
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
   const cursorDot = document.getElementById("cursor-dot");
   const cursorRing = document.getElementById("cursor-ring");
 
-  if (cursorDot && cursorRing) {
+  if (finePointer && cursorDot && cursorRing) {
     let mouseX = 0,
       mouseY = 0;
     let ringX = 0,

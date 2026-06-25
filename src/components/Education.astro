@@ -743,12 +743,13 @@ const languages = languagesByLang.es.map((es, i) => ({
             eduObserver.observe(item);
         });
 
-    // Luz ambiental que sigue el cursor
+    // Luz ambiental que sigue el cursor (solo con puntero fino)
     const eduSection = document.querySelector<HTMLElement>(".education");
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (eduSection && !reduceMotion) {
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (eduSection && !reduceMotion && finePointer) {
         eduSection.addEventListener("pointermove", (e) => {
             const r = eduSection.getBoundingClientRect();
             eduSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
