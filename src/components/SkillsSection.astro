@@ -48,7 +48,8 @@ const customIcons: Record<string, string> = {
     heart: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>',
 };
 
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
+
 const t = {
     es: {
         badge: "Stack Tecnológico",
@@ -64,13 +65,11 @@ const t = {
         subtitle: "8+ years mastering the craft of software development",
         stats: ["Years of Experience", "Projects Delivered", "Apps in Stores"],
     },
-}[lang];
+};
 
-type Loc = string | { es: string; en: string };
-type Skill = { name: Loc; brand?: string; custom?: string };
+type Loc = { es: string; en: string };
+type Skill = { name: string | Loc; brand?: string; custom?: string };
 type Category = { title: Loc; skills: Skill[] };
-
-const tr = (v: Loc) => (typeof v === "string" ? v : v[lang]);
 
 const skillCategories: Category[] = [
     {
@@ -107,7 +106,7 @@ const skillCategories: Category[] = [
         ],
     },
     {
-        title: "Frontend & Backend",
+        title: { es: "Frontend & Backend", en: "Frontend & Backend" },
         skills: [
             { name: "Angular", brand: "angular" },
             { name: "React", brand: "react" },
@@ -125,7 +124,7 @@ const skillCategories: Category[] = [
         ],
     },
     {
-        title: "DevOps & Tools",
+        title: { es: "DevOps & Tools", en: "DevOps & Tools" },
         skills: [
             { name: "Docker", brand: "docker" },
             { name: "Kubernetes", brand: "kubernetes" },
@@ -196,13 +195,16 @@ function resolve(skill: Skill) {
                         d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"
                     ></path>
                 </svg>
-                <span>{t.badge}</span>
+                <span><T es={t.es.badge} en={t.en.badge} /></span>
             </span>
             <h2 class="section-title">
-                {t.title} <span class="gradient-text">{t.accent}</span>
+                <T es={t.es.title} en={t.en.title} />
+                <span class="gradient-text"
+                    ><T es={t.es.accent} en={t.en.accent} /></span
+                >
             </h2>
             <p class="section-subtitle">
-                {t.subtitle}
+                <T es={t.es.subtitle} en={t.en.subtitle} />
             </p>
         </div>
 
@@ -216,7 +218,12 @@ function resolve(skill: Skill) {
                         style={`--gi:${catIndex}`}
                     >
                         <div class="group-head">
-                            <h3 class="group-title">{tr(category.title)}</h3>
+                            <h3 class="group-title">
+                                <T
+                                    es={category.title.es}
+                                    en={category.title.en}
+                                />
+                            </h3>
                         </div>
                         <div class="app-grid">
                             {category.skills.map((skill, sIdx) => {
@@ -232,12 +239,26 @@ function resolve(skill: Skill) {
                                                 viewBox="0 0 24 24"
                                                 fill={r.fill}
                                                 role="img"
-                                                aria-label={tr(skill.name)}
+                                                aria-label={
+                                                    typeof skill.name ===
+                                                    "string"
+                                                        ? skill.name
+                                                        : skill.name.es
+                                                }
                                                 set:html={r.inner}
                                             />
                                         </div>
                                         <span class="app-label">
-                                            {tr(skill.name)}
+                                            {
+                                                typeof skill.name === "string" ? (
+                                                    skill.name
+                                                ) : (
+                                                    <T
+                                                        es={skill.name.es}
+                                                        en={skill.name.en}
+                                                    />
+                                                )
+                                            }
                                         </span>
                                     </div>
                                 );
@@ -252,15 +273,21 @@ function resolve(skill: Skill) {
         <div class="stats-row">
             <div class="stat-item glass">
                 <span class="stat-number" data-count="8">0</span>
-                <span class="stat-label">{t.stats[0]}</span>
+                <span class="stat-label"
+                    ><T es={t.es.stats[0]} en={t.en.stats[0]} /></span
+                >
             </div>
             <div class="stat-item glass">
                 <span class="stat-number" data-count="20">0</span>
-                <span class="stat-label">{t.stats[1]}</span>
+                <span class="stat-label"
+                    ><T es={t.es.stats[1]} en={t.en.stats[1]} /></span
+                >
             </div>
             <div class="stat-item glass">
                 <span class="stat-number" data-count="10">0</span>
-                <span class="stat-label">{t.stats[2]}</span>
+                <span class="stat-label"
+                    ><T es={t.es.stats[2]} en={t.en.stats[2]} /></span
+                >
             </div>
         </div>
     </div>
@@ -565,7 +592,6 @@ function resolve(skill: Skill) {
 </style>
 
 <script>
-  function initSkills() {
     // Revelar grupos al entrar en viewport
     const groupObserver = new IntersectionObserver(
         (entries) => {
@@ -662,7 +688,4 @@ function resolve(skill: Skill) {
             });
         }
     }
-  }
-
-  document.addEventListener("astro:page-load", initSkills);
 </script>

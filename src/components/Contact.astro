@@ -22,7 +22,7 @@ function glowOf(hex: string) {
     return lum(hex) < 0.25 ? "rgba(255, 255, 255, 0.45)" : rgba(hex, 0.6);
 }
 
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
 
 const t = {
     es: {
@@ -31,8 +31,6 @@ const t = {
         accent: "Conectar",
         titlePost: "?",
         subtitle: "Estoy abierto a nuevas oportunidades y colaboraciones interesantes",
-        phone: "Teléfono",
-        playValue: "Mis Apps Publicadas",
         ctaTitle: "¿Tienes un proyecto en mente?",
         ctaText: "Hablemos sobre cómo puedo ayudarte a construir tu próxima app",
         ctaBtn: "Enviar Email",
@@ -45,16 +43,15 @@ const t = {
         accent: "Connect",
         titlePost: "?",
         subtitle: "I'm open to new opportunities and interesting collaborations",
-        phone: "Phone",
-        playValue: "My Published Apps",
         ctaTitle: "Have a project in mind?",
         ctaText: "Let's talk about how I can help you build your next app",
         ctaBtn: "Send Email",
         location: "Bogotá, Colombia",
         remote: "Available for remote work 🌎",
     },
-}[lang];
+};
 
+// name/value pueden ser string (igual en ambos) o {es,en} (traducidos)
 const contactLinks = [
     {
         name: "Email",
@@ -78,7 +75,7 @@ const contactLinks = [
         color: "#181717",
     },
     {
-        name: t.phone,
+        name: { es: "Teléfono", en: "Phone" },
         icon: "phone",
         value: "+57 313 816 8350",
         href: "tel:+573138168350",
@@ -94,7 +91,7 @@ const contactLinks = [
     {
         name: "Play Store",
         icon: "playstore",
-        value: t.playValue,
+        value: { es: "Mis Apps Publicadas", en: "My Published Apps" },
         href: "https://play.google.com/store/apps/developer?id=Gps+Port&hl=es_CO",
         color: "#34A853",
     },
@@ -117,15 +114,16 @@ const contactLinks = [
                         d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
                     ></path>
                 </svg>
-                <span>{t.badge}</span>
+                <span><T es={t.es.badge} en={t.en.badge} /></span>
             </span>
             <h2 class="section-title">
-                {t.titlePre} <span class="gradient-text">{t.accent}</span>{
-                    t.titlePost
-                }
+                <T es={t.es.titlePre} en={t.en.titlePre} />
+                <span class="gradient-text"
+                    ><T es={t.es.accent} en={t.en.accent} /></span
+                >{t.es.titlePost}
             </h2>
             <p class="section-subtitle">
-                {t.subtitle}
+                <T es={t.es.subtitle} en={t.en.subtitle} />
             </p>
         </div>
 
@@ -188,8 +186,30 @@ const contactLinks = [
                             )}
                         </div>
                         <div class="contact-info">
-                            <span class="contact-name">{contact.name}</span>
-                            <span class="contact-value">{contact.value}</span>
+                            <span class="contact-name">
+                                {
+                                    typeof contact.name === "string" ? (
+                                        contact.name
+                                    ) : (
+                                        <T
+                                            es={contact.name.es}
+                                            en={contact.name.en}
+                                        />
+                                    )
+                                }
+                            </span>
+                            <span class="contact-value">
+                                {
+                                    typeof contact.value === "string" ? (
+                                        contact.value
+                                    ) : (
+                                        <T
+                                            es={contact.value.es}
+                                            en={contact.value.en}
+                                        />
+                                    )
+                                }
+                            </span>
                         </div>
                         <div class="contact-arrow">
                             <svg
@@ -214,8 +234,8 @@ const contactLinks = [
             <div class="cta-content">
                 <div class="cta-icon"><span class="cta-glyph">🚀</span></div>
                 <div class="cta-text">
-                    <h3>{t.ctaTitle}</h3>
-                    <p>{t.ctaText}</p>
+                    <h3><T es={t.es.ctaTitle} en={t.en.ctaTitle} /></h3>
+                    <p><T es={t.es.ctaText} en={t.en.ctaText} /></p>
                 </div>
             </div>
             <a href="mailto:rclarence123@gmail.com" class="btn btn-primary">
@@ -232,7 +252,7 @@ const contactLinks = [
                     ></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                {t.ctaBtn}
+                <T es={t.es.ctaBtn} en={t.en.ctaBtn} />
             </a>
         </div>
 
@@ -249,9 +269,9 @@ const contactLinks = [
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>{t.location}</span>
+            <span>{t.es.location}</span>
             <span class="separator">•</span>
-            <span>{t.remote}</span>
+            <span><T es={t.es.remote} en={t.en.remote} /></span>
         </div>
     </div>
 </section>
@@ -558,53 +578,41 @@ const contactLinks = [
 </style>
 
 <script>
-    function initContact() {
-        const contactObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const delay =
-                            Number(
-                                (entry.target as HTMLElement).dataset.index,
-                            ) * 100;
-                        setTimeout(() => {
-                            entry.target.classList.add("visible");
-                        }, delay);
-                        contactObserver.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.2 },
-        );
+    const contactObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const delay =
+                        Number((entry.target as HTMLElement).dataset.index) *
+                        100;
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+                    }, delay);
+                    contactObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 },
+    );
 
-        document.querySelectorAll(".contact-card").forEach((item) => {
-            contactObserver.observe(item);
+    document.querySelectorAll(".contact-card").forEach((item) => {
+        contactObserver.observe(item);
+    });
+
+    // Luz ambiental que sigue el cursor
+    const contactSection = document.querySelector<HTMLElement>(".contact");
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (contactSection && !reduceMotion) {
+        contactSection.addEventListener("pointermove", (e) => {
+            const r = contactSection.getBoundingClientRect();
+            contactSection.style.setProperty("--mx", `${e.clientX - r.left}px`);
+            contactSection.style.setProperty("--my", `${e.clientY - r.top}px`);
+            contactSection.classList.add("glow-active");
         });
-
-        // Luz ambiental que sigue el cursor
-        const contactSection =
-            document.querySelector<HTMLElement>(".contact");
-        const reduceMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        ).matches;
-        if (contactSection && !reduceMotion) {
-            contactSection.addEventListener("pointermove", (e) => {
-                const r = contactSection.getBoundingClientRect();
-                contactSection.style.setProperty(
-                    "--mx",
-                    `${e.clientX - r.left}px`,
-                );
-                contactSection.style.setProperty(
-                    "--my",
-                    `${e.clientY - r.top}px`,
-                );
-                contactSection.classList.add("glow-active");
-            });
-            contactSection.addEventListener("pointerleave", () => {
-                contactSection.classList.remove("glow-active");
-            });
-        }
+        contactSection.addEventListener("pointerleave", () => {
+            contactSection.classList.remove("glow-active");
+        });
     }
-
-    document.addEventListener("astro:page-load", initContact);
 </script>

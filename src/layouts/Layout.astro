@@ -1,32 +1,13 @@
 ---
-import { ClientRouter } from "astro:transitions";
+import T from "../components/T.astro";
 
-export interface Props {
-  lang?: "es" | "en";
-}
-
-const { lang = "es" } = Astro.props;
-
-const meta = {
-  es: {
-    title: "Reales Myles Clarence | Full Stack Mobile Developer",
-    description:
-      "Full Stack Mobile Developer con +8 años de experiencia. Especializado en Flutter, Android e iOS, con dominio de frontend, backend, cloud (Docker/Kubernetes) e Inteligencia Artificial aplicada.",
-    rights: "Todos los derechos reservados.",
-  },
-  en: {
-    title: "Reales Myles Clarence | Full Stack Mobile Developer",
-    description:
-      "Full Stack Mobile Developer with 8+ years of experience. Specialized in Flutter, Android and iOS, with command of frontend, backend, cloud (Docker/Kubernetes) and applied Artificial Intelligence.",
-    rights: "All rights reserved.",
-  },
-}[lang];
-
-const { title, description } = meta;
+const title = "Reales Myles Clarence | Full Stack Mobile Developer";
+const description =
+  "Full Stack Mobile Developer | Desarrollador Full Stack Mobile con +8 años de experiencia. Flutter, Android, iOS, frontend, backend, cloud (Docker/Kubernetes) e Inteligencia Artificial aplicada.";
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="es" data-lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,11 +24,17 @@ const { title, description } = meta;
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-    <ClientRouter />
+    <script is:inline>
+      // Aplica el idioma guardado antes de pintar (evita parpadeo)
+      try {
+        document.documentElement.dataset.lang =
+          localStorage.getItem("lang") || "es";
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <!-- Background Effects -->
-    <div class="bg-effects" transition:persist>
+    <div class="bg-effects">
       <div class="bg-gradient"></div>
       <div class="bg-grid"></div>
       <div class="bg-glow bg-glow-1"></div>
@@ -56,8 +43,8 @@ const { title, description } = meta;
     </div>
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot" transition:persist></div>
-    <div class="cursor-ring" id="cursor-ring" transition:persist></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
 
     <!-- Main Content -->
     <main>
@@ -68,9 +55,10 @@ const { title, description } = meta;
     <footer class="footer">
       <div class="container">
         <p class="footer-text">
-          © 2026 <span class="gradient-text">Reales Myles Clarence</span>. {
-            meta.rights
-          }
+          © 2026 <span class="gradient-text">Reales Myles Clarence</span>. <T
+            es="Todos los derechos reservados."
+            en="All rights reserved."
+          />
         </p>
       </div>
     </footer>
@@ -235,15 +223,44 @@ const { title, description } = meta;
 </style>
 
 <script>
-  // El cursor y el seguimiento se inicializan UNA sola vez (elementos persistidos
-  // con transition:persist), guardando contra doble inicialización entre navegaciones.
-  function initCursor() {
-    if ((window as any).__cursorInit) return;
-    const cursorDot = document.getElementById("cursor-dot");
-    const cursorRing = document.getElementById("cursor-ring");
-    if (!cursorDot || !cursorRing) return;
-    (window as any).__cursorInit = true;
+  // === Selector de idioma reactivo (sin recarga ni cambio de página) ===
+  function applyLang(lang: string) {
+    document.documentElement.dataset.lang = lang;
+    document.documentElement.lang = lang;
+    try {
+      localStorage.setItem("lang", lang);
+    } catch (e) {}
+    document.querySelectorAll<HTMLElement>(".lang-opt").forEach((b) => {
+      const isActive = b.dataset.langSet === lang;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+    document.dispatchEvent(
+      new CustomEvent("langchange", { detail: { lang } }),
+    );
+  }
 
+  const savedLang = (() => {
+    try {
+      return localStorage.getItem("lang") || "es";
+    } catch (e) {
+      return "es";
+    }
+  })();
+
+  document.querySelectorAll<HTMLElement>(".lang-opt").forEach((b) => {
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      applyLang(b.dataset.langSet || "es");
+    });
+  });
+  applyLang(savedLang);
+
+  // === Cursor personalizado ===
+  const cursorDot = document.getElementById("cursor-dot");
+  const cursorRing = document.getElementById("cursor-ring");
+
+  if (cursorDot && cursorRing) {
     let mouseX = 0,
       mouseY = 0;
     let ringX = 0,
@@ -265,12 +282,7 @@ const { title, description } = meta;
       requestAnimationFrame(animateRing);
     }
     animateRing();
-  }
 
-  // Los listeners de hover se re-asocian en cada navegación (el contenido cambia)
-  function attachHover() {
-    const cursorRing = document.getElementById("cursor-ring");
-    if (!cursorRing) return;
     document
       .querySelectorAll("a, button, .card, .skill-card, .timeline-item")
       .forEach((el) => {
@@ -282,9 +294,4 @@ const { title, description } = meta;
         );
       });
   }
-
-  document.addEventListener("astro:page-load", () => {
-    initCursor();
-    attachHover();
-  });
 </script>

@@ -1,6 +1,6 @@
 ---
 // Navigation Component
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
 
 const navLinks = [
     {
@@ -29,15 +29,12 @@ const navLinks = [
         path: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z",
     },
 ];
-
-// El logo apunta al home del idioma actual
-const homeHref = lang === "en" ? "/en/" : "/";
 ---
 
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <!-- Logo -->
-        <a href={homeHref} class="nav-logo">
+        <a href="#hero" class="nav-logo">
             <span class="logo-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5f5f7">
                     <path
@@ -58,7 +55,7 @@ const homeHref = lang === "en" ? "/en/" : "/";
                                 <path d={link.path} />
                             </svg>
                         </span>
-                        <span>{link.label[lang]}</span>
+                        <span><T es={link.label.es} en={link.label.en} /></span>
                     </a>
                 ))
             }
@@ -67,20 +64,12 @@ const homeHref = lang === "en" ? "/en/" : "/";
         <div class="nav-right">
             <!-- Selector de idioma -->
             <div class="lang-switch" role="group" aria-label="Language">
-                <a
-                    href="/"
-                    class={`lang-opt ${lang === "es" ? "active" : ""}`}
-                    aria-current={lang === "es" ? "true" : "false"}
-                >
+                <button type="button" class="lang-opt" data-lang-set="es">
                     ES
-                </a>
-                <a
-                    href="/en/"
-                    class={`lang-opt ${lang === "en" ? "active" : ""}`}
-                    aria-current={lang === "en" ? "true" : "false"}
-                >
+                </button>
+                <button type="button" class="lang-opt" data-lang-set="en">
                     EN
-                </a>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -100,7 +89,7 @@ const homeHref = lang === "en" ? "/en/" : "/";
                             <path d={link.path} />
                         </svg>
                     </span>
-                    <span>{link.label[lang]}</span>
+                    <span><T es={link.label.es} en={link.label.en} /></span>
                 </a>
             ))
         }
@@ -160,6 +149,10 @@ const homeHref = lang === "en" ? "/en/" : "/";
         justify-content: center;
         min-width: 34px;
         padding: 5px 10px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-family: inherit;
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
         font-weight: 600;
@@ -505,26 +498,20 @@ const homeHref = lang === "en" ? "/en/" : "/";
         });
     }
 
-    // El menú móvil se re-asocia en cada navegación (sus elementos se recrean)
-    function initNav() {
-        const navToggle = document.getElementById("nav-toggle");
-        const mobileMenu = document.getElementById("mobile-menu");
+    const navToggle = document.getElementById("nav-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-        navToggle?.addEventListener("click", () => {
-            navToggle.classList.toggle("active");
-            mobileMenu?.classList.toggle("active");
-        });
-
-        document.querySelectorAll(".mobile-link").forEach((link) => {
-            link.addEventListener("click", () => {
-                navToggle?.classList.remove("active");
-                mobileMenu?.classList.remove("active");
-            });
-        });
-    }
-
-    document.addEventListener("astro:page-load", () => {
-        bindScrollOnce();
-        initNav();
+    navToggle?.addEventListener("click", () => {
+        navToggle.classList.toggle("active");
+        mobileMenu?.classList.toggle("active");
     });
+
+    document.querySelectorAll(".mobile-link").forEach((link) => {
+        link.addEventListener("click", () => {
+            navToggle?.classList.remove("active");
+            mobileMenu?.classList.remove("active");
+        });
+    });
+
+    bindScrollOnce();
 </script>

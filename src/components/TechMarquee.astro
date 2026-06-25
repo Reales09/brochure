@@ -82,18 +82,21 @@ const mid = Math.ceil(items.length / 2);
 const rowA = items.slice(0, mid);
 const rowB = items.slice(mid);
 
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
 const t = {
     es: { title: "Tecnologías que", accent: "manejo", cta: "Ver todo mi stack" },
     en: { title: "Technologies I", accent: "work with", cta: "See my full stack" },
-}[lang];
+};
 ---
 
 <section class="tech-marquee section" id="tech">
     <div class="container">
         <div class="section-header">
             <h2 class="section-title">
-                {t.title} <span class="gradient-text">{t.accent}</span>
+                <T es={t.es.title} en={t.en.title} />
+                <span class="gradient-text"
+                    ><T es={t.es.accent} en={t.en.accent} /></span
+                >
             </h2>
         </div>
     </div>
@@ -139,7 +142,7 @@ const t = {
     <div class="container">
         <div class="marquee-cta">
             <a href="#skills" class="btn btn-primary">
-                {t.cta}
+                <T es={t.es.cta} en={t.en.cta} />
                 <svg
                     width="18"
                     height="18"

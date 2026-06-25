@@ -1,6 +1,6 @@
 ---
 // Experience Timeline Component
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
 
 const t = {
     es: {
@@ -15,7 +15,7 @@ const t = {
         accent: "Experience",
         subtitle: "Building high-impact solutions since 2016",
     },
-}[lang];
+};
 
 const experiencesByLang = {
     es: [
@@ -144,7 +144,11 @@ const experiencesByLang = {
     ],
 };
 
-const experiences = experiencesByLang[lang];
+// Empareja cada experiencia en ambos idiomas para el toggle reactivo
+const experiences = experiencesByLang.es.map((es, i) => ({
+    es,
+    en: experiencesByLang.en[i],
+}));
 ---
 
 <section class="experience section" id="experience">
@@ -162,13 +166,16 @@ const experiences = experiencesByLang[lang];
                         d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"
                     ></path>
                 </svg>
-                <span>{t.badge}</span>
+                <span><T es={t.es.badge} en={t.en.badge} /></span>
             </span>
             <h2 class="section-title">
-                {t.title} <span class="gradient-text">{t.accent}</span>
+                <T es={t.es.title} en={t.en.title} />
+                <span class="gradient-text"
+                    ><T es={t.es.accent} en={t.en.accent} /></span
+                >
             </h2>
             <p class="section-subtitle">
-                {t.subtitle}
+                <T es={t.es.subtitle} en={t.en.subtitle} />
             </p>
         </div>
 
@@ -178,7 +185,10 @@ const experiences = experiencesByLang[lang];
 
             {
                 experiences.map((exp, index) => (
-                    <div class={`timeline-item ${exp.type}`} data-index={index}>
+                    <div
+                        class={`timeline-item ${exp.es.type}`}
+                        data-index={index}
+                    >
                         <div class="timeline-dot">
                             <div class="dot-inner" />
                         </div>
@@ -186,8 +196,12 @@ const experiences = experiencesByLang[lang];
                         <div class="timeline-card glass">
                             <div class="card-header">
                                 <div class="company-info">
-                                    <h3 class="company-name">{exp.company}</h3>
-                                    <p class="role">{exp.role}</p>
+                                    <h3 class="company-name">
+                                        {exp.es.company}
+                                    </h3>
+                                    <p class="role">
+                                        <T es={exp.es.role} en={exp.en.role} />
+                                    </p>
                                 </div>
                                 <div class="period-badge">
                                     <svg
@@ -210,7 +224,12 @@ const experiences = experiencesByLang[lang];
                                         <line x1="8" y1="2" x2="8" y2="6" />
                                         <line x1="3" y1="10" x2="21" y2="10" />
                                     </svg>
-                                    <span>{exp.period}</span>
+                                    <span>
+                                        <T
+                                            es={exp.es.period}
+                                            en={exp.en.period}
+                                        />
+                                    </span>
                                 </div>
                             </div>
 
@@ -226,13 +245,18 @@ const experiences = experiencesByLang[lang];
                                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                     <circle cx="12" cy="10" r="3" />
                                 </svg>
-                                <span>{exp.location}</span>
+                                <span>{exp.es.location}</span>
                             </div>
 
-                            <p class="description">{exp.description}</p>
+                            <p class="description">
+                                <T
+                                    es={exp.es.description}
+                                    en={exp.en.description}
+                                />
+                            </p>
 
                             <div class="highlights">
-                                {exp.highlights.map((highlight) => (
+                                {exp.es.highlights.map((highlight, j) => (
                                     <div class="highlight-item">
                                         <svg
                                             width="16"
@@ -244,14 +268,24 @@ const experiences = experiencesByLang[lang];
                                         >
                                             <polyline points="20 6 9 17 4 12" />
                                         </svg>
-                                        <span>{highlight}</span>
+                                        <span>
+                                            <T
+                                                es={highlight}
+                                                en={exp.en.highlights[j]}
+                                            />
+                                        </span>
                                     </div>
                                 ))}
                             </div>
 
                             <div class="technologies">
-                                {exp.technologies.map((tech) => (
-                                    <span class="tech-tag">{tech}</span>
+                                {exp.es.technologies.map((tech, j) => (
+                                    <span class="tech-tag">
+                                        <T
+                                            es={tech}
+                                            en={exp.en.technologies[j]}
+                                        />
+                                    </span>
                                 ))}
                             </div>
                         </div>
@@ -521,29 +555,24 @@ const experiences = experiencesByLang[lang];
 </style>
 
 <script>
-    function initTimeline() {
-        const timelineObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const delay =
-                            Number(
-                                (entry.target as HTMLElement).dataset.index,
-                            ) * 200;
-                        setTimeout(() => {
-                            entry.target.classList.add("visible");
-                        }, delay);
-                        timelineObserver.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.2 },
-        );
+    const timelineObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const delay =
+                        Number((entry.target as HTMLElement).dataset.index) *
+                        200;
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+                    }, delay);
+                    timelineObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 },
+    );
 
-        document.querySelectorAll(".timeline-item").forEach((item) => {
-            timelineObserver.observe(item);
-        });
-    }
-
-    document.addEventListener("astro:page-load", initTimeline);
+    document.querySelectorAll(".timeline-item").forEach((item) => {
+        timelineObserver.observe(item);
+    });
 </script>

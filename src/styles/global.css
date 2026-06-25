@@ -109,6 +109,16 @@
   padding: 0;
 }
 
+/* === i18n: mostrar solo el idioma activo (toggle reactivo, sin recarga) === */
+.i18n {
+  display: contents;
+}
+html[data-lang="en"] .i18n[data-l="es"],
+html[data-lang="es"] .i18n[data-l="en"],
+html:not([data-lang="en"]) .i18n[data-l="en"] {
+  display: none;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;

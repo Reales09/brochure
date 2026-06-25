@@ -1,0 +1,28 @@
+---
+// Texto bilingüe: renderiza ambos idiomas; el CSS muestra solo el activo
+// según [data-lang] en <html>. Uso: <T es="Hola" en="Hi" /> o html para markup.
+interface Props {
+    es: string;
+    en: string;
+    html?: boolean;
+}
+const { es, en, html = false } = Astro.props;
+---
+
+{
+    html ? (
+        <>
+            <span class="i18n" data-l="es" set:html={es} />
+            <span class="i18n" data-l="en" set:html={en} />
+        </>
+    ) : (
+        <>
+            <span class="i18n" data-l="es">
+                {es}
+            </span>
+            <span class="i18n" data-l="en">
+                {en}
+            </span>
+        </>
+    )
+}

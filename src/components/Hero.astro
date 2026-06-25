@@ -1,6 +1,6 @@
 ---
 // Hero Section Component
-const { lang = "es" } = Astro.props;
+import T from "./T.astro";
 
 const t = {
     es: {
@@ -43,7 +43,7 @@ const t = {
             "Technical Team Leadership",
         ],
     },
-}[lang];
+};
 ---
 
 <section class="hero" id="hero">
@@ -58,12 +58,14 @@ const t = {
                         ></path>
                     </svg>
                 </span>
-                <span>{t.badge}</span>
+                <span><T es={t.es.badge} en={t.en.badge} /></span>
             </div>
 
             <!-- Name -->
             <h1 class="hero-title animate-item">
-                <span class="hero-greeting">{t.greeting}</span>
+                <span class="hero-greeting"
+                    ><T es={t.es.greeting} en={t.en.greeting} /></span
+                >
                 <span class="hero-name gradient-text">Reales Myles</span>
                 <span class="hero-name">Clarence</span>
             </h1>
@@ -75,7 +77,8 @@ const t = {
             </p>
 
             <!-- Description -->
-            <p class="hero-description animate-item" set:html={t.description}>
+            <p class="hero-description animate-item">
+                <T es={t.es.description} en={t.en.description} html />
             </p>
 
             <!-- Tech Stack Pills -->
@@ -143,7 +146,7 @@ const t = {
                     >
                         <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                     </svg>
-                    {t.ctaExp}
+                    <T es={t.es.ctaExp} en={t.en.ctaExp} />
                 </a>
                 <a href="#contact" class="btn btn-outline">
                     <svg
@@ -158,7 +161,7 @@ const t = {
                             d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                         ></path>
                     </svg>
-                    {t.ctaContact}
+                    <T es={t.es.ctaContact} en={t.en.ctaContact} />
                 </a>
             </div>
         </div>
@@ -171,7 +174,7 @@ const t = {
                         <path d="M7 2v11h3v9l7-12h-4l4-8z"></path>
                     </svg>
                 </span>
-                <span>{t.cards[0]}</span>
+                <span><T es={t.es.cards[0]} en={t.en.cards[0]} /></span>
             </div>
             <div class="floating-card card-2">
                 <span class="floating-icon">
@@ -181,7 +184,7 @@ const t = {
                         ></path>
                     </svg>
                 </span>
-                <span>{t.cards[1]}</span>
+                <span><T es={t.es.cards[1]} en={t.en.cards[1]} /></span>
             </div>
             <div class="floating-card card-3">
                 <span class="floating-icon">
@@ -191,7 +194,7 @@ const t = {
                         ></path>
                     </svg>
                 </span>
-                <span>{t.cards[2]}</span>
+                <span><T es={t.es.cards[2]} en={t.en.cards[2]} /></span>
             </div>
         </div>
 
@@ -584,12 +587,15 @@ const t = {
     }
 </style>
 
-<script define:vars={{ phrases: t.phrases }}>
-    // Typewriter effect — se reinicia en cada navegación (View Transitions).
-    // Un contador de generación detiene el timer de la página anterior.
+<script define:vars={{ phrasesEs: t.es.phrases, phrasesEn: t.en.phrases }}>
+    // Typewriter effect — reactivo al cambio de idioma.
+    // Un contador de generación detiene el timer anterior al cambiar.
     function startTypewriter() {
         const typewriterElement = document.getElementById("typewriter");
         if (!typewriterElement) return;
+
+        const lang = document.documentElement.dataset.lang || "es";
+        const phrases = lang === "en" ? phrasesEn : phrasesEs;
 
         const gen = ((window as any).__twGen || 0) + 1;
         (window as any).__twGen = gen;
@@ -635,5 +641,7 @@ const t = {
         typewrite();
     }
 
-    document.addEventListener("astro:page-load", startTypewriter);
+    startTypewriter();
+    // Reinicia el typewriter con las frases del nuevo idioma
+    document.addEventListener("langchange", startTypewriter);
 </script>
