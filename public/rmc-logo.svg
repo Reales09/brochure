@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="24 20 605 181" width="605" height="181" fill="none" role="img" aria-label="RMC">
+  <defs>
+    <mask id="cutm">
+      <rect x="0" y="0" width="720" height="210" fill="white"></rect>
+      <path d="M315,178 L325,116 L335,178 Z" fill="black"></path>
+      <path d="M162.7,178 L143,164.6 L147.6,158 L167.3,171.7 Z" fill="black"></path>
+    </mask>
+  </defs>
+  <g mask="url(#cutm)" stroke="currentColor" stroke-width="26" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="14">
+    <path d="M52,35 V175"></path>
+    <path d="M52,35 H128 A40,40 0 0 1 128,109 H52"></path>
+    <path d="M70,109 L165,175"></path>
+    <path d="M222,35 V175"></path>
+    <path d="M428,35 V175"></path>
+    <path d="M222,35 L325,165 L428,35"></path>
+    <path d="M601,72 A57,57 0 1 0 601,138"></path>
+  </g>
+</svg>

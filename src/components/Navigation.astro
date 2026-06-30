@@ -34,15 +34,38 @@ const navLinks = [
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <!-- Logo -->
-        <a href="#hero" class="nav-logo">
-            <span class="logo-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#f5f5f7">
+        <a href="#hero" class="nav-logo" aria-label="RMC — Inicio">
+            <svg
+                class="logo-mark"
+                viewBox="24 20 605 181"
+                fill="none"
+                aria-hidden="true"
+            >
+                <mask id="rmc-cut">
+                    <rect x="0" y="0" width="720" height="210" fill="white" />
+                    <path d="M315,178 L325,116 L335,178 Z" fill="black" />
                     <path
-                        d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"
-                    ></path>
-                </svg>
-            </span>
-            <span class="logo-text">RMC</span>
+                        d="M162.7,178 L143,164.6 L147.6,158 L167.3,171.7 Z"
+                        fill="black"
+                    />
+                </mask>
+                <g
+                    mask="url(#rmc-cut)"
+                    stroke="currentColor"
+                    stroke-width="26"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="14"
+                >
+                    <path d="M52,35 V175" />
+                    <path d="M52,35 H128 A40,40 0 0 1 128,109 H52" />
+                    <path d="M70,109 L165,175" />
+                    <path d="M222,35 V175" />
+                    <path d="M428,35 V175" />
+                    <path d="M222,35 L325,165 L428,35" />
+                    <path d="M601,72 A57,57 0 1 0 601,138" />
+                </g>
+            </svg>
         </a>
 
         <!-- Desktop Navigation -->
@@ -174,57 +197,19 @@ const navLinks = [
     .nav-logo {
         display: flex;
         align-items: center;
-        gap: var(--space-2);
         text-decoration: none;
-        font-weight: 800;
-        font-size: var(--text-xl);
         color: var(--color-text);
-        transition: all var(--transition-fast);
+        transition: color var(--transition-fast);
     }
 
     .nav-logo:hover {
         color: var(--color-primary-light);
     }
 
-    .logo-icon {
-        position: relative;
-        width: 36px;
-        height: 36px;
-        display: grid;
-        place-items: center;
-        font-size: var(--text-lg);
-        border-radius: 10px;
-        background: linear-gradient(
-            160deg,
-            rgba(255, 255, 255, 0.18) 0%,
-            rgba(255, 255, 255, 0.05) 55%,
-            rgba(255, 255, 255, 0.02) 100%
-        );
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        box-shadow:
-            inset 0 1px 1px rgba(255, 255, 255, 0.4),
-            0 4px 12px -4px rgba(0, 0, 0, 0.55);
-    }
-
-    .logo-icon::before {
-        content: "";
-        position: absolute;
-        inset: 1px 1px auto 1px;
-        height: 46%;
-        border-radius: 9px 9px 50% 50%;
-        background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.32) 0%,
-            transparent 100%
-        );
-        pointer-events: none;
-    }
-
-    .logo-text {
-        background: var(--gradient-silver);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .logo-mark {
+        height: 26px;
+        width: auto;
+        display: block;
     }
 
     /* Desktop Links */

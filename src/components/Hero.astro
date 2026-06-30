@@ -597,8 +597,8 @@ const t = {
         const lang = document.documentElement.dataset.lang || "es";
         const phrases = lang === "en" ? phrasesEn : phrasesEs;
 
-        const gen = ((window as any).__twGen || 0) + 1;
-        (window as any).__twGen = gen;
+        const gen = (window.__twGen || 0) + 1;
+        window.__twGen = gen;
 
         let phraseIndex = 0;
         let charIndex = 0;
@@ -606,7 +606,7 @@ const t = {
         let typeSpeed = 100;
 
         function typewrite() {
-            if ((window as any).__twGen !== gen || !typewriterElement) return;
+            if (window.__twGen !== gen || !typewriterElement) return;
 
             const currentPhrase = phrases[phraseIndex];
 
